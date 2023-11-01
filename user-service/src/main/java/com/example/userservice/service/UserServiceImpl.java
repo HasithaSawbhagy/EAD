@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public String addUser(UserDto userDto) {
         User user = new User(
-                userDto.getEmail(),
                 userDto.getFullName(),
+                userDto.getEmail(),
                 this.passwordEncoder.encode(userDto.getPassword()),
                 userDto.getRole(),
                 userDto.getTelephone()

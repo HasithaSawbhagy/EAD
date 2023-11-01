@@ -2,6 +2,7 @@ package com.example.userservice.model;
 
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -11,11 +12,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name="fullName", length = 200)
+    private String fullName;
+
     @Column(name="email", length = 200)
     private String email;
 
-    @Column(name="fullName", length = 200)
-    private String fullName;
 
     @Column(name="passwod", length = 200)
     private String password;
@@ -30,9 +32,9 @@ public class User {
         super();
     }
 
-    public User(String email, String fullName, String password, String role, String telephone) {
-        this.email = email;
+    public User(String fullName, String email, String password, String role, String telephone) {
         this.fullName = fullName;
+        this.email = email;
         this.password = password;
         this.role = role;
         this.telephone = telephone;
