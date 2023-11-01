@@ -5,14 +5,14 @@ public class UserDto {
     private String email;
     private String password;
     private String role;
-    private String userName;
+    private String fullName;
     private String telephone;
 
-    public UserDto(String email, String password, String role, String userName, String telephone) {
+    public UserDto(String email, String password, String role, String fullName, String telephone) {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.userName = userName;
+        this.fullName = fullName;
         this.telephone = telephone;
     }
 
@@ -40,12 +40,12 @@ public class UserDto {
         this.role = role;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getTelephone() {

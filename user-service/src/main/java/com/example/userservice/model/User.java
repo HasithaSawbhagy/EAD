@@ -13,18 +13,18 @@ public class User {
     private String email;
     private String password;
     private String role;
-    private String userName;
+    private String fullName;
     private String telephone;
 
     public User() {
         super();
     }
 
-    public User(String email, String password, String role, String userName, String telephone) {
+    public User(String email, String password, String role, String fullName, String telephone) {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.userName = userName;
+        this.fullName = fullName;
         this.telephone = telephone;
     }
 
@@ -60,12 +60,12 @@ public class User {
         this.role = role;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setFullName(String userName) {
+        this.fullName = fullName;
     }
 
     public String getTelephone() {
