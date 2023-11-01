@@ -3,22 +3,25 @@ package com.example.userservice.dto;
 public class UserDto {
 
     private String email;
+    private String fullName;
     private String password;
     private String role;
-    private String fullName;
     private String telephone;
 
-    public UserDto(String email, String password, String role, String fullName, String telephone) {
+    public UserDto(String email, String fullName, String password, String role, String telephone) {
         this.email = email;
+        this.fullName = fullName;
         this.password = password;
         this.role = role;
-        this.fullName = fullName;
         this.telephone = telephone;
     }
 
     public String getEmail() {
         return email;
     }
+
+
+
 
     public void setEmail(String email) {
         this.email = email;

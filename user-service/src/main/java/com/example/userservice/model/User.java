@@ -3,28 +3,38 @@ package com.example.userservice.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "user", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "user")
 public class User {
 
     @Id
+    @Column(name="id", length = 45)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name="email", length = 200)
     private String email;
-    private String password;
-    private String role;
+
+    @Column(name="fullName", length = 200)
     private String fullName;
+
+    @Column(name="passwod", length = 200)
+    private String password;
+
+    @Column(name="role", length = 200)
+    private String role;
+
+    @Column(name="telephone", length = 200)
     private String telephone;
 
     public User() {
         super();
     }
 
-    public User(String email, String password, String role, String fullName, String telephone) {
+    public User(String email, String fullName, String password, String role, String telephone) {
         this.email = email;
+        this.fullName = fullName;
         this.password = password;
         this.role = role;
-        this.fullName = fullName;
         this.telephone = telephone;
     }
 
