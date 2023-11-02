@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Builder
 @Data
-public class order {
+public class Order {
     @Id
     private String id;
     private String user_id;
