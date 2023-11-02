@@ -1,11 +1,14 @@
 package com.SpringbootTest.orderservice.service;
 
 import com.SpringbootTest.orderservice.dto.OrderRequest;
+import com.SpringbootTest.orderservice.dto.OrderResponse;
 import com.SpringbootTest.orderservice.model.Order;
 import com.SpringbootTest.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -23,5 +26,21 @@ public class OrderService {
 
         orderRepository.save(order);
         log.info("Order {} is saved", order.getId());
+    }
+
+    public List<OrderResponse> getAllOrders() {
+        List<Order> orders = orderRepository.findAll();
+
+        return orders.stream().map(this::mapToOrderResponse).toList();
+    }
+
+    private OrderResponse mapToOrderResponse(Order order) {
+        return OrderResponse.builder()
+                .id(order.getId())
+                .user_id(order.getUser_id())
+                .order_date(order.getOrder_date())
+                .status(order.getStatus())
+                .delivery_address(order.getDelivery_address())
+                .build();
     }
 }

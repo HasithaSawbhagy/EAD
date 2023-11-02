@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderRequest {
+public class OrderResponse {
+    private String id;
     private String user_id;
     private String order_date;
     private String status;
