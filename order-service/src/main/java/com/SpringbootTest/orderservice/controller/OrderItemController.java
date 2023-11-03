@@ -18,9 +18,14 @@ public class OrderItemController {
     private final OrderItemService orderItemService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createOrderItem(@RequestBody OrderItemRequest orderItemRequest){
-        orderItemService.createOrderItem(orderItemRequest);
+
+    public ResponseEntity<String> createOrderItem(@RequestBody OrderItemRequest orderItemRequest){
+        try {
+            orderItemService.createOrderItem(orderItemRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Order Item created successfully");
+        }catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Order creation failed: " + e.getMessage());
+        }
     }
 
     @GetMapping

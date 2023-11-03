@@ -19,10 +19,15 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public void createOrder(@RequestBody OrderRequest orderRequest){
-        orderService.createOrder(orderRequest);
+    public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest) {
+        try {
+            orderService.createOrder(orderRequest);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Order created successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Order creation failed: " + e.getMessage());
+        }
     }
+
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

@@ -18,15 +18,21 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     public void createOrder(OrderRequest orderRequest){
-        Order order = Order.builder()
-                .user_id(orderRequest.getUser_id())
-                .order_date(orderRequest.getOrder_date())
-                .status(orderRequest.getStatus())
-                .delivery_address(orderRequest.getDelivery_address())
-                .build();
+        try {
+            Order order = Order.builder()
+                    .user_id(orderRequest.getUser_id())
+                    .order_date(orderRequest.getOrder_date())
+                    .status(orderRequest.getStatus())
+                    .delivery_address(orderRequest.getDelivery_address())
+                    .build();
 
-        orderRepository.save(order);
-        log.info("Order {} is saved", order.getId());
+            orderRepository.save(order);
+            log.info("Order {} created successfully", order.getId());
+
+        } catch (Exception e) {
+            log.error("Failed to create order: " + e.getMessage());
+            throw new RuntimeException("Failed to create order");
+        }
     }
 
     public List<OrderResponse> getAllOrders() {

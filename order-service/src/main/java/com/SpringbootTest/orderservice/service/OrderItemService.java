@@ -19,15 +19,20 @@ public class OrderItemService {
     private final OrderItemRepository orderItemRepository;
 
     public void createOrderItem(OrderItemRequest orderItemRequest){
-        OrderItem orderItem = OrderItem.builder()
-                .order_id(orderItemRequest.getOrder_id())
-                .product_id(orderItemRequest.getProduct_id())
-                .quantity(orderItemRequest.getQuantity())
-                .price(orderItemRequest.getPrice())
-                .build();
+        try {
+            OrderItem orderItem = OrderItem.builder()
+                    .order_id(orderItemRequest.getOrder_id())
+                    .product_id(orderItemRequest.getProduct_id())
+                    .quantity(orderItemRequest.getQuantity())
+                    .price(orderItemRequest.getPrice())
+                    .build();
 
-        orderItemRepository.save(orderItem);
-        log.info("Order Item {} is saved", orderItem.getId());
+            orderItemRepository.save(orderItem);
+            log.info("Order Item {} is saved", orderItem.getId());
+        }catch (Exception e){
+            log.error("Failed to create order item: " + e.getMessage());
+            throw new RuntimeException("Failed to create order item");
+        }
     }
 
     public List<OrderItemResponse> getAllOrderItems() {
