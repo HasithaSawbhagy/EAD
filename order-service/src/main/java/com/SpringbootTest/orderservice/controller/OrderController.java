@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/order")
@@ -30,9 +31,12 @@ public class OrderController {
     }
 
     @DeleteMapping("/{Id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> deleteOrder(@PathVariable String Id) {
-        orderService.deleteOrder(Id);
-        return ResponseEntity.status(HttpStatus.OK).body("Order with ID " + Id + " deleted successfully.");
+        try {
+            orderService.deleteOrder(Id);
+            return ResponseEntity.status(HttpStatus.OK).body("Order with ID " + Id + " deleted successfully.");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found with ID: " + Id);
+        }
     }
 }

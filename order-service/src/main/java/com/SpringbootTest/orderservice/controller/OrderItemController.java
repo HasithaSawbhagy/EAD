@@ -5,9 +5,11 @@ import com.SpringbootTest.orderservice.dto.OrderItemResponse;
 import com.SpringbootTest.orderservice.service.OrderItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/orderItem")
@@ -25,5 +27,15 @@ public class OrderItemController {
     @ResponseStatus(HttpStatus.OK)
     public List<OrderItemResponse> getAllOrderItems(){
         return orderItemService.getAllOrderItems();
+    }
+
+    @DeleteMapping("/{Id}")
+    public ResponseEntity<String> deleteOrderItem(@PathVariable String Id) {
+        try {
+            orderItemService.deleteOrderItem(Id);
+            return ResponseEntity.status(HttpStatus.OK).body("Order Item with ID " + Id + " deleted successfully.");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order Item not found with ID: " + Id);
+        }
     }
 }

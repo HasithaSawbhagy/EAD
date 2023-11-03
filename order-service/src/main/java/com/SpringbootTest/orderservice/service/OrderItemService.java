@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +44,12 @@ public class OrderItemService {
                 .quantity(orderItem.getQuantity())
                 .price(orderItem.getPrice())
                 .build();
+    }
+
+    public void deleteOrderItem(String Id) {
+        OrderItem orderItem = orderItemRepository.findById(Id)
+                .orElseThrow(() -> new NoSuchElementException("Order not found with ID: " + Id));
+        orderItemRepository.deleteById(Id);
+        log.info("Order Item with ID {} is deleted successfully.", Id);
     }
 }
