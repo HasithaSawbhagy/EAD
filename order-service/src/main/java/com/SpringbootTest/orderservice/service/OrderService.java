@@ -7,6 +7,8 @@ import com.SpringbootTest.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -19,9 +21,10 @@ public class OrderService {
     private final OrderRepository orderRepository;
     public void createOrder(OrderRequest orderRequest){
         try {
+            String todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             Order order = Order.builder()
                     .user_id(orderRequest.getUser_id())
-                    .order_date(orderRequest.getOrder_date())
+                    .order_date(todayDate)
                     .status("pending")
                     .delivery_address(orderRequest.getDelivery_address())
                     .build();
