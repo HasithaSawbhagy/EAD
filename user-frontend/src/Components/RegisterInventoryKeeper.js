@@ -2,7 +2,7 @@ import {  useState } from "react";
 import axios from "axios";
 import "../Css/register.css";
 
-function Register() {
+function RegisterInventoryKeeper() {
   
     const [email, setEmail] = useState("");
     const [username, setUserName] = useState("");
@@ -13,7 +13,7 @@ function Register() {
     async function save(event) {
         event.preventDefault();
         try {
-          await axios.post("http://localhost:8080/users/register", {
+          await axios.post("http://localhost:8080/users/register_InventoryKeeper", {
           email: email,
           username: username,
           password: password,
@@ -106,4 +106,4 @@ function Register() {
     );
   }
   
-  export default Register;
+  export default RegisterInventoryKeeper;

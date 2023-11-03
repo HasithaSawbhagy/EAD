@@ -2,6 +2,9 @@ import { BrowserRouter,Routes,Route } from "react-router-dom";
 import Home from "./Components/home";
 import Register from "./Components/Register";
 import Login from "./Components/Login";
+import RegisterCustomer from "./Components/RegisterCustomer";
+import RegisterInventoryKeeper from "./Components/RegisterInventoryKeeper";
+import RegisterDeliveryPerson from "./Components/RegisterDeliveryPerson";
 
 
 function App() {
@@ -12,6 +15,9 @@ function App() {
               <Route path="/home" element= { <Home/>} />
               <Route path="/register" element= { <Register/>} />
               <Route path="/" element= { <Login/>} />
+              <Route path="/registerCustomer" element= { <RegisterCustomer/>} />
+              <Route path="/registerInventoryKeeper" element= { <RegisterInventoryKeeper/>} />
+              <Route path="/registerDeliveryPerson" element= { <RegisterDeliveryPerson/>} />
             </Routes>
         </BrowserRouter>
       
