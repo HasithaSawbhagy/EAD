@@ -1,5 +1,7 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.entity.DelveryPerson;
+import com.example.userservice.entity.InventoryKeeper;
 import com.example.userservice.entity.User;
 import com.example.userservice.security.JwtTokenProvider;
 import com.example.userservice.service.UserService;
@@ -24,6 +26,19 @@ public class UserController {
     @PostMapping("/register")
     public User createUser(@RequestBody User user) {
         return userservice.saveUser(user);
+    }
+
+    //deliver person registration
+    @PostMapping("/register_DelveryPerson")
+    public DelveryPerson createDelveryPerson(@RequestBody DelveryPerson DelveryPerson) {
+        return userservice.saveDelveryPerson(DelveryPerson);
+    }
+
+
+    //Inventory Keeper registration
+    @PostMapping("/register_InventoryKeeper")
+    public InventoryKeeper createInventoryKeeper(@RequestBody InventoryKeeper inventoryKeeper) {
+        return userservice.saveInventoryKeeper(inventoryKeeper);
     }
 
     @PostMapping("/login")
