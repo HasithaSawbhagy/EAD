@@ -35,6 +35,12 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
+    @GetMapping("/user/{user_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderResponse> getOrdersByUserId(@PathVariable String user_id) {
+        return orderService.getOrdersByUserId(user_id);
+    }
+
     @DeleteMapping("/{Id}")
     public ResponseEntity<String> deleteOrder(@PathVariable String Id) {
         try {

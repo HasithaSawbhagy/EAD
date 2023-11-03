@@ -43,6 +43,11 @@ public class OrderService {
 
         return orders.stream().map(this::mapToOrderResponse).toList();
     }
+    public List<OrderResponse> getOrdersByUserId(String user_id) {
+        List<Order> orders = orderRepository.findByUserId(user_id);
+
+        return orders.stream().map(this::mapToOrderResponse).toList();
+    }
 
     private OrderResponse mapToOrderResponse(Order order) {
         return OrderResponse.builder()
