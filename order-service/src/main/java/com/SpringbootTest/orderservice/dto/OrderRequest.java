@@ -12,6 +12,5 @@ import lombok.NoArgsConstructor;
 public class OrderRequest {
     private String user_id;
     private String order_date;
-    private String status;
     private String delivery_address;
 }

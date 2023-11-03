@@ -22,7 +22,7 @@ public class OrderService {
             Order order = Order.builder()
                     .user_id(orderRequest.getUser_id())
                     .order_date(orderRequest.getOrder_date())
-                    .status(orderRequest.getStatus())
+                    .status("pending")
                     .delivery_address(orderRequest.getDelivery_address())
                     .build();
 
