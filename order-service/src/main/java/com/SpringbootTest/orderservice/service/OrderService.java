@@ -43,4 +43,9 @@ public class OrderService {
                 .delivery_address(order.getDelivery_address())
                 .build();
     }
+
+    public void deleteOrder(String Id) {
+        orderRepository.deleteById(Id);
+        log.info("Order with ID {} is deleted", Id);
+    }
 }

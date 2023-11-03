@@ -5,6 +5,7 @@ import com.SpringbootTest.orderservice.dto.OrderResponse;
 import com.SpringbootTest.orderservice.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,5 +27,12 @@ public class OrderController {
     @ResponseStatus(HttpStatus.OK)
     public List<OrderResponse> getAllOrders(){
         return orderService.getAllOrders();
+    }
+
+    @DeleteMapping("/{Id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<String> deleteOrder(@PathVariable String Id) {
+        orderService.deleteOrder(Id);
+        return ResponseEntity.status(HttpStatus.OK).body("Order with ID " + Id + " deleted successfully.");
     }
 }
