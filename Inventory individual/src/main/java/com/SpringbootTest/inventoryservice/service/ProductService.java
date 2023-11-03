@@ -41,7 +41,4 @@ public class ProductService {
                 .build();
     }
 
-//    public void deleteProduct(Long productId) {
-//        productService.deleteProduct(productId);
-//    }
 }
