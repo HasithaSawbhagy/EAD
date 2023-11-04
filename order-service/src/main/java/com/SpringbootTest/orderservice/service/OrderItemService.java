@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -20,12 +21,19 @@ public class OrderItemService {
     private final OrderItemRepository orderItemRepository;
 
     public void createOrderItem(OrderItemRequest orderItemRequest){
+
+        int quantity = orderItemRequest.getQuantity();
+        BigDecimal price = orderItemRequest.getPrice();
+        BigDecimal quantityBigDecimal = BigDecimal.valueOf(quantity);
+        BigDecimal subprice = quantityBigDecimal.multiply(price);
+
         try {
             OrderItem orderItem = OrderItem.builder()
                     .order_id(orderItemRequest.getOrder_id())
                     .product_id(orderItemRequest.getProduct_id())
                     .quantity(orderItemRequest.getQuantity())
                     .price(orderItemRequest.getPrice())
+                    .subprice(subprice)
                     .build();
 
             orderItemRepository.save(orderItem);
@@ -49,6 +57,7 @@ public class OrderItemService {
                 .product_id(orderItem.getProduct_id())
                 .quantity(orderItem.getQuantity())
                 .price(orderItem.getPrice())
+                .subprice(orderItem.getSubprice())
                 .build();
     }
     public void updateItemQuantity(String Id, ItemQuantity itemQuantity) {

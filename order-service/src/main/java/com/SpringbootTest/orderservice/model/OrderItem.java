@@ -21,5 +21,6 @@ public class OrderItem {
     private String product_id;
     private int quantity;
     private BigDecimal price;
+    private BigDecimal subprice;
 
 }

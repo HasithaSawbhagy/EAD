@@ -17,4 +17,5 @@ public class OrderItemResponse {
     private String product_id;
     private int quantity;
     private BigDecimal price;
+    private BigDecimal subprice;
 }
