@@ -83,7 +83,7 @@ public class OrderService {
 
         orderRepository.save(order);
 
-        log.info("Order status updated for ID {}: {}", Id, orderAddressUpdate.getDelivery_address());
+        log.info("Order address updated for ID {}: {}", Id, orderAddressUpdate.getDelivery_address());
 
     }
 

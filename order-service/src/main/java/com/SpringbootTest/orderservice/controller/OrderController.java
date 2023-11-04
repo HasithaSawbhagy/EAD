@@ -56,7 +56,7 @@ public class OrderController {
     public ResponseEntity<String> updateOrderAddress(@PathVariable String Id, @RequestBody OrderAddressUpdate orderAddressUpdate) {
         try {
             orderService.updateOrderAddress(Id, orderAddressUpdate);
-            return ResponseEntity.status(HttpStatus.OK).body("Order status updated successfully.");
+            return ResponseEntity.status(HttpStatus.OK).body("Order address updated successfully.");
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found with ID: " + Id);
         }
