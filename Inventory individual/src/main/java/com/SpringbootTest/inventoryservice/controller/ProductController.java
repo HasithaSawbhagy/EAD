@@ -4,10 +4,12 @@ package com.SpringbootTest.inventoryservice.controller;
 import com.SpringbootTest.inventoryservice.Exception.NotFoundException;
 import com.SpringbootTest.inventoryservice.dto.ProductRequest;
 import com.SpringbootTest.inventoryservice.dto.ProductResponse;
+import com.SpringbootTest.inventoryservice.model.Product;
 import com.SpringbootTest.inventoryservice.repository.ProductRepository;
 import com.SpringbootTest.inventoryservice.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +36,7 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    //delete user
+    //delete Product
     @DeleteMapping("delete/{id}")
     public String deleteProduct(@PathVariable String id) {
         if (!productRepository.existsById(id)) {
@@ -42,5 +44,12 @@ public class ProductController {
         }
         productRepository.deleteById(id);
         return "Product with id " + id + "has been deleted";
+    }
+
+    //Update Product
+    @PutMapping("/{id")
+    public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product product){
+        Product updateProduct = productService.updateProduct(id,product);
+        return ResponseEntity.ok(updateProduct);
     }
 }

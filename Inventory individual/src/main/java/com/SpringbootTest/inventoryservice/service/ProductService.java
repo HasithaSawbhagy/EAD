@@ -1,5 +1,6 @@
 package com.SpringbootTest.inventoryservice.service;
 
+import com.SpringbootTest.inventoryservice.Exception.NotFoundException;
 import com.SpringbootTest.inventoryservice.dto.ProductRequest;
 import com.SpringbootTest.inventoryservice.dto.ProductResponse;
 import com.SpringbootTest.inventoryservice.model.Product;
@@ -7,6 +8,8 @@ import com.SpringbootTest.inventoryservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -39,6 +42,15 @@ public class ProductService {
                 .description(product.getDescription())
                 .price(product.getPrice())
                 .build();
+    }
+
+    public Product updateProduct(String id, Product product){
+        Product existingProduct = productRepository.findById(id).orElseThrow(()-> new NotFoundException("User is not found"));
+        existingProduct.setName(product.getName());
+        existingProduct.setDescription(product.getDescription());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setQuantity(product.getQuantity());
+        return productRepository.save(existingProduct);
     }
 
 }
