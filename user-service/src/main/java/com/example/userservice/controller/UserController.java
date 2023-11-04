@@ -5,6 +5,7 @@ import com.example.userservice.entity.InventoryKeeper;
 import com.example.userservice.entity.User;
 import com.example.userservice.security.JwtTokenProvider;
 import com.example.userservice.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class UserController {
 
     //Inventory Keeper registration
     @PostMapping("/register_InventoryKeeper")
-    public InventoryKeeper createInventoryKeeper(@RequestBody InventoryKeeper inventoryKeeper) {
+    public InventoryKeeper createInventoryKeeper(@Valid @RequestBody InventoryKeeper inventoryKeeper) {
         return userservice.saveInventoryKeeper(inventoryKeeper);
     }
 

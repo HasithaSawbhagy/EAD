@@ -6,6 +6,7 @@ function RegisterCustomer() {
   const [email, setEmail] = useState("");
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
   const [telephone, setTelephone] = useState("");
   const [address, setAddress] = useState("");
@@ -38,6 +39,8 @@ function RegisterCustomer() {
 
     if (!password.trim()) {
       errors.password = "Password is required";
+    } else if (password !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
     }
 
     if (!role.trim()) {
@@ -128,6 +131,23 @@ function RegisterCustomer() {
                 }}
               />
               {errors.password && <p className="error">{errors.password}</p>}
+            </div>
+
+            <div className="form-group">
+              <label>Confirm Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={(event) => {
+                  setConfirmPassword(event.target.value);
+                }}
+              />
+              {errors.confirmPassword && (
+                <p className="error">{errors.confirmPassword}</p>
+              )}
             </div>
 
             <div className="form-group">
