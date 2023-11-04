@@ -44,13 +44,25 @@ public class ProductService {
                 .build();
     }
 
-    public Product updateProduct(String id, Product product){
-        Product existingProduct = productRepository.findById(id).orElseThrow(()-> new NotFoundException("User is not found"));
-        existingProduct.setName(product.getName());
-        existingProduct.setDescription(product.getDescription());
-        existingProduct.setPrice(product.getPrice());
-        existingProduct.setQuantity(product.getQuantity());
+    public Product updateProduct(String id, Product product) {
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Product not found"));
+
+        if (product.getName() != null) {
+            existingProduct.setName(product.getName());
+        }
+        if (product.getDescription() != null) {
+            existingProduct.setDescription(product.getDescription());
+        }
+        if (product.getPrice() != null) {
+            existingProduct.setPrice(product.getPrice());
+        }
+        if (product.getQuantity() != null) {
+            existingProduct.setQuantity(product.getQuantity());
+        }
+
         return productRepository.save(existingProduct);
     }
+
 
 }
