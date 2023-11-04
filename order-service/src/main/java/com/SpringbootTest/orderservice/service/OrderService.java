@@ -42,7 +42,6 @@ public class OrderService {
 
     public List<OrderResponse> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
-
         return orders.stream().map(this::mapToOrderResponse).toList();
     }
     public List<OrderResponse> getOrdersByUserId(String user_id) {
@@ -62,29 +61,20 @@ public class OrderService {
     }
 
     public void updateOrderStatus(String Id, OrderStatusUpdate orderStatusUpdate) {
-
         Order order = orderRepository.findById(Id)
                 .orElseThrow(() -> new NoSuchElementException("Order not found with ID: " + Id));
-
         order.setStatus(orderStatusUpdate.getStatus());
-
         orderRepository.save(order);
-
         log.info("Order status updated for ID {}: {}", Id, orderStatusUpdate.getStatus());
 
     }
 
     public void updateOrderAddress(String Id, OrderAddressUpdate orderAddressUpdate) {
-
         Order order = orderRepository.findById(Id)
                 .orElseThrow(() -> new NoSuchElementException("Order not found with ID: " + Id));
-
         order.setDelivery_address(orderAddressUpdate.getDelivery_address());
-
         orderRepository.save(order);
-
         log.info("Order address updated for ID {}: {}", Id, orderAddressUpdate.getDelivery_address());
-
     }
 
     public void deleteOrder(String Id) {

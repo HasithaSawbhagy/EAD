@@ -52,16 +52,11 @@ public class OrderItemService {
                 .build();
     }
     public void updateItemQuantity(String Id, ItemQuantity itemQuantity) {
-
         OrderItem orderItem = orderItemRepository.findById(Id)
                 .orElseThrow(() -> new NoSuchElementException("Order Item not found with ID: " + Id));
-
         orderItem.setQuantity(itemQuantity.getQuantity());
-
         orderItemRepository.save(orderItem);
-
         log.info("Order Item Quantity updated for ID {}: {}", Id, itemQuantity.getQuantity());
-
     }
 
     public void deleteOrderItem(String Id) {

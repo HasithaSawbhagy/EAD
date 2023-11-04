@@ -1,5 +1,6 @@
 package com.SpringbootTest.orderservice.controller;
 
+import com.SpringbootTest.orderservice.dto.OrderAddressUpdate;
 import com.SpringbootTest.orderservice.dto.OrderItemRequest;
 import com.SpringbootTest.orderservice.dto.OrderItemResponse;
 import com.SpringbootTest.orderservice.dto.ItemQuantity;
@@ -33,6 +34,16 @@ public class OrderItemController {
     @ResponseStatus(HttpStatus.OK)
     public List<OrderItemResponse> getAllOrderItems(){
         return orderItemService.getAllOrderItems();
+    }
+
+    @PatchMapping("/{Id}/quantity")
+    public ResponseEntity<String> updateItemQuantity(@PathVariable String Id, @RequestBody ItemQuantity itemQuantity) {
+        try {
+            orderItemService.updateItemQuantity(Id, itemQuantity);
+            return ResponseEntity.status(HttpStatus.OK).body("Order item quantity updated successfully.");
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order item not found with ID: " + Id);
+        }
     }
 
     @DeleteMapping("/{Id}")
