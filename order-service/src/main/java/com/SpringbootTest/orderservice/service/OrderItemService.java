@@ -20,12 +20,14 @@ public class OrderItemService {
 
     private final OrderItemRepository orderItemRepository;
 
+    //Create Order Item
     public void createOrderItem(OrderItemRequest orderItemRequest){
 
-        int quantity = orderItemRequest.getQuantity();
-        BigDecimal price = orderItemRequest.getPrice();
-        BigDecimal quantityBigDecimal = BigDecimal.valueOf(quantity);
-        BigDecimal subprice = quantityBigDecimal.multiply(price);
+        //Calculate Sub Price of Each Item According to Quantity
+        int quantity = orderItemRequest.getQuantity(); // Get quantity
+        BigDecimal price = orderItemRequest.getPrice(); //Get price
+        BigDecimal quantityBigDecimal = BigDecimal.valueOf(quantity); //Convert Quantity into BigDecimal
+        BigDecimal subprice = quantityBigDecimal.multiply(price); //Calculate Subprice
 
         try {
             OrderItem orderItem = OrderItem.builder()
@@ -44,6 +46,7 @@ public class OrderItemService {
         }
     }
 
+    //Get All Order Items
     public List<OrderItemResponse> getAllOrderItems() {
         List<OrderItem> orderItems = orderItemRepository.findAll();
 
@@ -60,14 +63,31 @@ public class OrderItemService {
                 .subprice(orderItem.getSubprice())
                 .build();
     }
+
+    //Update Item Quantity
     public void updateItemQuantity(String Id, ItemQuantity itemQuantity) {
         OrderItem orderItem = orderItemRepository.findById(Id)
                 .orElseThrow(() -> new NoSuchElementException("Order Item not found with ID: " + Id));
-        orderItem.setQuantity(itemQuantity.getQuantity());
+
+        // Get the current price and quantity
+        BigDecimal price = orderItem.getPrice();
+        int newQuantity = itemQuantity.getQuantity();
+
+        // Update the quantity of the order item
+        orderItem.setQuantity(newQuantity);
         orderItemRepository.save(orderItem);
-        log.info("Order Item Quantity updated for ID {}: {}", Id, itemQuantity.getQuantity());
+
+        // Recalculate the subprice based on the updated quantity
+        BigDecimal quantityBigDecimal = BigDecimal.valueOf(newQuantity);
+        BigDecimal subprice = quantityBigDecimal.multiply(price);
+        orderItem.setSubprice(subprice);
+        orderItemRepository.save(orderItem);
+
+        log.info("Order Item Quantity updated for ID {}: {}", Id, newQuantity);
+        log.info("Subprice updated for ID {} to: {}", Id, subprice);
     }
 
+    //Delete Order Item
     public void deleteOrderItem(String Id) {
         OrderItem orderItem = orderItemRepository.findById(Id)
                 .orElseThrow(() -> new NoSuchElementException("Order not found with ID: " + Id));
