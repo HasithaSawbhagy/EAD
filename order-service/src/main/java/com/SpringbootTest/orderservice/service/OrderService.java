@@ -21,6 +21,8 @@ import java.util.NoSuchElementException;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+
+    //Create Order
     public void createOrder(OrderRequest orderRequest){
         try {
             String todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -40,10 +42,13 @@ public class OrderService {
         }
     }
 
+    //Get All Order
     public List<OrderResponse> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
         return orders.stream().map(this::mapToOrderResponse).toList();
     }
+
+    //Get All Order by User
     public List<OrderResponse> getOrdersByUserId(String user_id) {
         List<Order> orders = orderRepository.findByUserId(user_id);
 

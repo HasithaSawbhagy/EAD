@@ -1,9 +1,6 @@
 package com.SpringbootTest.orderservice.controller;
 
-import com.SpringbootTest.orderservice.dto.OrderAddressUpdate;
-import com.SpringbootTest.orderservice.dto.OrderItemRequest;
-import com.SpringbootTest.orderservice.dto.OrderItemResponse;
-import com.SpringbootTest.orderservice.dto.ItemQuantity;
+import com.SpringbootTest.orderservice.dto.*;
 import com.SpringbootTest.orderservice.service.OrderItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,6 +32,12 @@ public class OrderItemController {
     @ResponseStatus(HttpStatus.OK)
     public List<OrderItemResponse> getAllOrderItems(){
         return orderItemService.getAllOrderItems();
+    }
+
+    @GetMapping("/order/{order_id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderItemResponse> getOrdersByUserId(@PathVariable String order_id) {
+        return orderItemService.getOrderItemsByOrderId(order_id);
     }
 
     //Update Item Quantity

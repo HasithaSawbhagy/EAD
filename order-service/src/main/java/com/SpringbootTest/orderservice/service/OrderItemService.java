@@ -53,6 +53,13 @@ public class OrderItemService {
         return orderItems.stream().map(this::mapToOrderItemResponse).toList();
     }
 
+    //Get All Order Item by Order
+    public List<OrderItemResponse> getOrderItemsByOrderId(String order_id) {
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(order_id);
+
+        return orderItems.stream().map(this::mapToOrderItemResponse).toList();
+    }
+
     private OrderItemResponse mapToOrderItemResponse(OrderItem orderItem) {
         return OrderItemResponse.builder()
                 .id(orderItem.getId())
