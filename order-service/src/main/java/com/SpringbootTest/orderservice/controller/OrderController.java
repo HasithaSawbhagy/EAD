@@ -20,6 +20,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    //Create Order
     @PostMapping
     public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequest) {
         try {
@@ -30,19 +31,21 @@ public class OrderController {
         }
     }
 
-
+    //Get All Order
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<OrderResponse> getAllOrders(){
         return orderService.getAllOrders();
     }
 
+    //Get All Order by User
     @GetMapping("/user/{user_id}")
     @ResponseStatus(HttpStatus.OK)
     public List<OrderResponse> getOrdersByUserId(@PathVariable String user_id) {
         return orderService.getOrdersByUserId(user_id);
     }
 
+    //Update Order Status
     @PatchMapping("/{Id}/status")
     public ResponseEntity<String> updateOrderStatus(@PathVariable String Id, @RequestBody OrderStatusUpdate orderStatusUpdate) {
         try {
@@ -52,6 +55,8 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found with ID: " + Id);
         }
     }
+
+    //Update Delivery Address
     @PatchMapping("/{Id}/address")
     public ResponseEntity<String> updateOrderAddress(@PathVariable String Id, @RequestBody OrderAddressUpdate orderAddressUpdate) {
         try {
@@ -62,6 +67,7 @@ public class OrderController {
         }
     }
 
+    //Delete Order
     @DeleteMapping("/{Id}")
     public ResponseEntity<String> deleteOrder(@PathVariable String Id) {
         try {

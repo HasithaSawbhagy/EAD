@@ -19,8 +19,8 @@ import java.util.NoSuchElementException;
 public class OrderItemController {
     private final OrderItemService orderItemService;
 
+    //Create Order Item
     @PostMapping
-
     public ResponseEntity<String> createOrderItem(@RequestBody OrderItemRequest orderItemRequest){
         try {
             orderItemService.createOrderItem(orderItemRequest);
@@ -30,12 +30,14 @@ public class OrderItemController {
         }
     }
 
+    //Get All Order Items
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<OrderItemResponse> getAllOrderItems(){
         return orderItemService.getAllOrderItems();
     }
 
+    //Update Item Quantity
     @PatchMapping("/{Id}/quantity")
     public ResponseEntity<String> updateItemQuantity(@PathVariable String Id, @RequestBody ItemQuantity itemQuantity) {
         try {
@@ -46,6 +48,7 @@ public class OrderItemController {
         }
     }
 
+    //Delete Order Item
     @DeleteMapping("/{Id}")
     public ResponseEntity<String> deleteOrderItem(@PathVariable String Id) {
         try {
