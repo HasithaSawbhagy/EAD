@@ -2,6 +2,8 @@ package com.SpringbootTest.orderservice.service;
 
 import com.SpringbootTest.orderservice.dto.OrderRequest;
 import com.SpringbootTest.orderservice.dto.OrderResponse;
+import com.SpringbootTest.orderservice.dto.OrderStatusUpdate;
+import com.SpringbootTest.orderservice.dto.OrderAddressUpdate;
 import com.SpringbootTest.orderservice.model.Order;
 import com.SpringbootTest.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
@@ -57,6 +59,32 @@ public class OrderService {
                 .status(order.getStatus())
                 .delivery_address(order.getDelivery_address())
                 .build();
+    }
+
+    public void updateOrderStatus(String Id, OrderStatusUpdate orderStatusUpdate) {
+
+        Order order = orderRepository.findById(Id)
+                .orElseThrow(() -> new NoSuchElementException("Order not found with ID: " + Id));
+
+        order.setStatus(orderStatusUpdate.getStatus());
+
+        orderRepository.save(order);
+
+        log.info("Order status updated for ID {}: {}", Id, orderStatusUpdate.getStatus());
+
+    }
+
+    public void updateOrderAddress(String Id, OrderAddressUpdate orderAddressUpdate) {
+
+        Order order = orderRepository.findById(Id)
+                .orElseThrow(() -> new NoSuchElementException("Order not found with ID: " + Id));
+
+        order.setDelivery_address(orderAddressUpdate.getDelivery_address());
+
+        orderRepository.save(order);
+
+        log.info("Order status updated for ID {}: {}", Id, orderAddressUpdate.getDelivery_address());
+
     }
 
     public void deleteOrder(String Id) {
