@@ -4,11 +4,11 @@ import "../Css/register.css";
 
 function RegisterDeliveryPerson() {
   const [email, setEmail] = useState("");
-  const [username, setUserName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [telephone, setTelephone] = useState("");
-  const [areacode, setAreacode] = useState("");
+  const [areaCode, setAreaCode] = useState("");
   const [errors, setErrors] = useState({});
 
   const validateEmail = (email) => {
@@ -26,8 +26,8 @@ function RegisterDeliveryPerson() {
   const validateForm = () => {
     const errors = {};
 
-    if (!username.trim()) {
-      errors.username = "Username is required";
+    if (!fullName.trim()) {
+      errors.fullName = "Username is required";
     }
 
     if (!email.trim()) {
@@ -61,11 +61,11 @@ function RegisterDeliveryPerson() {
       try {
         await axios.post("http://localhost:8080/users/register_DelveryPerson", {
           email: email,
-          username: username,
+          fullName: fullName,
           password: password,
           role: role,
           telephone: telephone,
-          areacode: areacode,
+          areaCode: areaCode,
         });
         alert("User Registration Successfully");
       } catch (err) {
@@ -86,14 +86,14 @@ function RegisterDeliveryPerson() {
               <input
                 type="text"
                 className="form-control"
-                id="username"
+                id="fullName"
                 placeholder="Enter Name"
-                value={username}
+                value={fullName}
                 onChange={(event) => {
-                  setUserName(event.target.value);
+                  setFullName(event.target.value);
                 }}
               />
-              {errors.username && <p className="error">{errors.username}</p>}
+              {errors.fullName && <p className="error">{errors.fullName}</p>}
             </div>
 
             <div className="form-group">
@@ -161,11 +161,11 @@ function RegisterDeliveryPerson() {
               <input
                 type="text"
                 className="form-control"
-                id="areacode"
+                id="areaCode"
                 placeholder="Enter area code"
-                value={areacode}
+                value={areaCode}
                 onChange={(event) => {
-                  setAreacode(event.target.value);
+                  setAreaCode(event.target.value);
                 }}
               />
             </div>

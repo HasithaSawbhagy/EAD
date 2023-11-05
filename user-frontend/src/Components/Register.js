@@ -5,7 +5,7 @@ import "../Css/register.css";
 function Register() {
   
     const [email, setEmail] = useState("");
-    const [username, setUserName] = useState("");
+    const [fullName, setFullName] = useState("");
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("");
     const [telephone, setTelephone] = useState("");
@@ -15,7 +15,7 @@ function Register() {
         try {
           await axios.post("http://localhost:8080/users/register", {
           email: email,
-          username: username,
+          fullName: fullName,
           password: password,
           role:role,
           telephone:telephone
@@ -38,9 +38,9 @@ function Register() {
           <label>User Name</label>
           <input type="text"  class="form-control" id="username" placeholder="Enter Name"
           
-          value={username}
+          value={fullName}
           onChange={(event) => {
-            setUserName(event.target.value);
+            setFullName(event.target.value);
           }}
           />
 

@@ -48,11 +48,26 @@ public class UserService {
         return inventoryKeeperRepository.save(inventoryKeeper);
     }
 
-    public User loginUser(String email, String password) {
-        User user = userRepository.findByEmail(email);
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            return user;
+    public Object loginUser(String email, String password) {
+        // First, try to authenticate as a CUSTOMER
+        User customer = userRepository.findByEmail(email);
+        if (customer != null && passwordEncoder.matches(password, customer.getPassword())) {
+            return customer;
         }
+
+        // If not a CUSTOMER, try to authenticate as an INVENTORY_MANAGER
+        InventoryKeeper inventoryManager = inventoryKeeperRepository.findByEmail(email);
+        if (inventoryManager != null && passwordEncoder.matches(password, inventoryManager.getPassword())) {
+            return inventoryManager;
+        }
+
+        // If not an INVENTORY_MANAGER, try to authenticate as a DELIVERY_PERSON
+        DelveryPerson deliveryPerson = delveryPersonRepository.findByEmail(email);
+        if (deliveryPerson != null && passwordEncoder.matches(password, deliveryPerson.getPassword())) {
+            return deliveryPerson;
+        }
+
+        // If no match is found, return null
         return null;
     }
 }

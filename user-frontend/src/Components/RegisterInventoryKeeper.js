@@ -4,7 +4,7 @@ import "../Css/register.css";
 
 function RegisterInventoryKeeper() {
   const [email, setEmail] = useState("");
-  const [username, setUserName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
   const [telephone, setTelephone] = useState("");
@@ -25,8 +25,8 @@ function RegisterInventoryKeeper() {
   const validateForm = () => {
     const errors = {};
 
-    if (!username.trim()) {
-      errors.username = "Username is required";
+    if (!fullName.trim()) {
+      errors.fullName = "Username is required";
     }
 
     if (!email.trim()) {
@@ -60,7 +60,7 @@ function RegisterInventoryKeeper() {
       try {
         await axios.post("http://localhost:8080/users/register_InventoryKeeper", {
           email: email,
-          username: username,
+          fullName: fullName,
           password: password,
           role: role,
           telephone: telephone,
@@ -84,14 +84,14 @@ function RegisterInventoryKeeper() {
               <input
                 type="text"
                 className="form-control"
-                id="username"
+                id="fullName"
                 placeholder="Enter Name"
-                value={username}
+                value={fullName}
                 onChange={(event) => {
-                  setUserName(event.target.value);
+                  setFullName(event.target.value);
                 }}
               />
-              {errors.username && <p className="error">{errors.username}</p>}
+              {errors.fullName && <p className="error">{errors.fullName}</p>}
             </div>
 
             <div className="form-group">

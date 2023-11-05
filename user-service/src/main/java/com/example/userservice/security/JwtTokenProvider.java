@@ -22,13 +22,14 @@ public class JwtTokenProvider {
     @Value("${app.jwtExpirationInMs}")
     private int jwtExpirationInMs;
 
-    public String generateToken(String email) {
+    public String generateToken(String email, String role) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
         Map<String, Object> claims = new HashMap<>();
         claims.put("sub", email);
+        claims.put("sub", role);
 
-        return Jwts.builder()
+        return "Bearer"+Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)

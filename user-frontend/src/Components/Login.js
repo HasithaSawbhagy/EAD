@@ -1,7 +1,9 @@
 import {  useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import jwt_decode, { jwtDecode } from "jwt-decode";
 import "../Css/login.css"
+
 function Login() {
    
     const [email, setEmail] = useState("");
@@ -9,38 +11,47 @@ function Login() {
     const navigate = useNavigate();
 
     async function login(event) {
-        event.preventDefault();
-        try {
-          await axios.post("http://localhost:8080/api/v1/user/login", {
-            email: email,
-            password: password,
-            }).then((res) => 
-            {
-             console.log(res.data);
-             
-             if (res.data.message == "Email not exits") 
-             {
-               alert("Email not exits");
-             } 
-             else if(res.data.message == "Login Success")
-             { 
-                
-                navigate('/home');
-             } 
-              else 
-             { 
-                alert("Incorrect Email and Password not match");
-             }
-          }, fail => {
-           console.error(fail); // Error!
-  });
-        }
- 
-         catch (err) {
-          alert(err);
-        }
-      
+      event.preventDefault();
+      try {
+          const response = await axios.post("http://localhost:8080/users/login", {
+              email: email,
+              password: password,
+          });
+  
+          console.log(response.data);
+  
+          
+              // Successful login; you received a token
+              const token = response.data;
+              
+              // Decode the token to get user information
+              const decodedUser = jwtDecode(token);
+
+              console.log(decodedUser);
+              
+              // Now, you can handle different user roles
+              if (decodedUser.sub === 'CUSTOMER') {
+                  // Redirect to the customer dashboard or show customer-specific content
+                  navigate('/register');
+              } else if (decodedUser.sub === 'INVENTORY_MANAGER') {
+                  // Redirect to the inventory manager dashboard or show inventory manager-specific content
+                  navigate('/register');
+              } else if (decodedUser.sub === 'DELIVERY_PERSON') {
+                  // Redirect to the delivery person dashboard or show delivery person-specific content
+                  navigate('/register');
+              }
+           else {
+              // Unsuccessful login; handle the error message
+              console.error('Login failed: ' + response.data);
+              alert("Login failed. Please check your credentials.");
+          }
+      } catch (error) {
+          // Handle network errors or other issues
+          console.error('Error:', error);
+          alert("An error occurred while trying to log in.");
       }
+  }
+      
     return (
        <div>
             <div class="container">

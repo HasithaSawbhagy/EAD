@@ -44,15 +44,24 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody User loginUser) {
-        User authenticatedUser = userservice.loginUser(loginUser.getEmail(), loginUser.getPassword());
+        Object authenticatedUser = userservice.loginUser(loginUser.getEmail(), loginUser.getPassword());
 
         if (authenticatedUser != null) {
-            String token = jwtTokenProvider.generateToken(authenticatedUser.getEmail());
-            return ResponseEntity.ok(token);
-        } else {
-            return ResponseEntity.badRequest().body("Invalid email or password");
+            if (authenticatedUser instanceof User) {
+                String token = jwtTokenProvider.generateToken(((User) authenticatedUser).getEmail(), String.valueOf(((User) authenticatedUser).getRole()));
+                return ResponseEntity.ok(token);
+            } else if (authenticatedUser instanceof InventoryKeeper) {
+                String token = jwtTokenProvider.generateToken(((InventoryKeeper) authenticatedUser).getEmail(), String.valueOf(((InventoryKeeper) authenticatedUser).getRole()));
+                return ResponseEntity.ok(token);
+            } else if (authenticatedUser instanceof DelveryPerson) {
+                String token = jwtTokenProvider.generateToken(((DelveryPerson) authenticatedUser).getEmail(), String.valueOf(((DelveryPerson) authenticatedUser).getRole()));
+                return ResponseEntity.ok(token);
+            }
         }
+
+        return ResponseEntity.badRequest().body("Invalid email or password");
     }
+
 
     @GetMapping("/validateToken/{token}")
     public ResponseEntity<String> validateTokenAndGetEmail(@PathVariable String token) {
