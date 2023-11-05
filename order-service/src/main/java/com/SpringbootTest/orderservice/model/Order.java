@@ -21,4 +21,5 @@ public class Order {
     private String order_date;
     private String status;
     private String delivery_address;
+    private BigDecimal totalCost;
 }

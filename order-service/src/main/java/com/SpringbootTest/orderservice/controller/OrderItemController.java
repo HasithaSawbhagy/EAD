@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -34,6 +35,7 @@ public class OrderItemController {
         return orderItemService.getAllOrderItems();
     }
 
+    //Get All Order Item by Order Id
     @GetMapping("/order/{order_id}")
     @ResponseStatus(HttpStatus.OK)
     public List<OrderItemResponse> getOrdersByUserId(@PathVariable String order_id) {
@@ -41,7 +43,7 @@ public class OrderItemController {
     }
 
     //Update Item Quantity
-    @PatchMapping("/{Id}/quantity")
+    @PatchMapping("/quantity/{Id}")
     public ResponseEntity<String> updateItemQuantity(@PathVariable String Id, @RequestBody ItemQuantity itemQuantity) {
         try {
             orderItemService.updateItemQuantity(Id, itemQuantity);

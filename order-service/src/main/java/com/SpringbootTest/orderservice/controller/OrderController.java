@@ -17,7 +17,6 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api/order")
 @RequiredArgsConstructor
 public class OrderController {
-
     private final OrderService orderService;
 
     //Create Order
@@ -46,7 +45,7 @@ public class OrderController {
     }
 
     //Update Order Status
-    @PatchMapping("/{Id}/status")
+    @PatchMapping("/status/{Id}")
     public ResponseEntity<String> updateOrderStatus(@PathVariable String Id, @RequestBody OrderStatusUpdate orderStatusUpdate) {
         try {
             orderService.updateOrderStatus(Id, orderStatusUpdate);
@@ -57,13 +56,22 @@ public class OrderController {
     }
 
     //Update Delivery Address
-    @PatchMapping("/{Id}/address")
+    @PatchMapping("/address/{Id}")
     public ResponseEntity<String> updateOrderAddress(@PathVariable String Id, @RequestBody OrderAddressUpdate orderAddressUpdate) {
         try {
             orderService.updateOrderAddress(Id, orderAddressUpdate);
             return ResponseEntity.status(HttpStatus.OK).body("Order address updated successfully.");
         } catch (NoSuchElementException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found with ID: " + Id);
+        }
+    }
+    @PatchMapping("/updateTotalCost/{orderId}")
+    public ResponseEntity<String> updateOrderTotalCost(@PathVariable String orderId) {
+        try {
+            orderService.updateOrderTotalCost(orderId);
+            return ResponseEntity.status(HttpStatus.OK).body("Total cost updated for Order ID: " + orderId);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found with ID: " + orderId);
         }
     }
 

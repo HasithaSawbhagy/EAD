@@ -5,10 +5,14 @@ import com.SpringbootTest.orderservice.dto.OrderResponse;
 import com.SpringbootTest.orderservice.dto.OrderStatusUpdate;
 import com.SpringbootTest.orderservice.dto.OrderAddressUpdate;
 import com.SpringbootTest.orderservice.model.Order;
+import com.SpringbootTest.orderservice.model.OrderItem;
 import com.SpringbootTest.orderservice.repository.OrderRepository;
+import com.SpringbootTest.orderservice.repository.OrderItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -21,16 +25,19 @@ import java.util.NoSuchElementException;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
 
     //Create Order
     public void createOrder(OrderRequest orderRequest){
         try {
             String todayDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            BigDecimal initialTotalCost = BigDecimal.valueOf(0); // Set the initial total cost to 0
             Order order = Order.builder()
                     .user_id(orderRequest.getUser_id())
                     .order_date(todayDate)
                     .status("pending")
                     .delivery_address(orderRequest.getDelivery_address())
+                    .totalCost(initialTotalCost)  // Set totalCost initially to a specific BigDecimal value
                     .build();
 
             orderRepository.save(order);
@@ -62,6 +69,7 @@ public class OrderService {
                 .order_date(order.getOrder_date())
                 .status(order.getStatus())
                 .delivery_address(order.getDelivery_address())
+                .totalCost(order.getTotalCost())
                 .build();
     }
 
@@ -81,6 +89,24 @@ public class OrderService {
         orderRepository.save(order);
         log.info("Order address updated for ID {}: {}", Id, orderAddressUpdate.getDelivery_address());
     }
+
+    public void updateOrderTotalCost(String orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new NoSuchElementException("Order not found with ID: " + orderId));
+
+
+        List<OrderItem> orderItems = orderItemRepository.findByOrderId(orderId);
+
+        BigDecimal totalCost = orderItems.stream()
+                .map(OrderItem::getSubprice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        order.setTotalCost(totalCost);
+        orderRepository.save(order);
+
+        log.info("Total cost updated for Order ID {}: {}", orderId, totalCost);
+    }
+
 
     public void deleteOrder(String Id) {
         Order order = orderRepository.findById(Id)
