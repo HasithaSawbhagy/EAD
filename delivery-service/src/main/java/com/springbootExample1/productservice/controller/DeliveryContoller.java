@@ -45,6 +45,11 @@ deliveryService.createDelivery(deliveryRequest);
             @RequestParam String delPersonName) {
         deliveryService.updateDeliveryPersonInfo(id, delPersonId, delPersonName);
     }
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public DeliveryResponse getDeliveryById(@PathVariable String id) {
+        return deliveryService.getDeliveryById(id);
+   }
 
 }
 

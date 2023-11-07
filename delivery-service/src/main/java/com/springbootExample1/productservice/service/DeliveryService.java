@@ -72,6 +72,12 @@ public class DeliveryService {
         deliveryRepository.save(delivery);
         log.info("Delivery {} updated with delivery person info: ID={}, Name={}", id, delPersonId, delPersonName);
     }
+    public DeliveryResponse getDeliveryById(String id) {
+        Delivery delivery = deliveryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Delivery not found"));
+
+        return mapToDeliveryResponse(delivery);
+    }
 }
 
 
