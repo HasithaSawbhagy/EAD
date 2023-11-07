@@ -39,17 +39,17 @@
     border-radius: 3px;
   }
   
-  .btn {
+  button {
     width: 100%;
     padding: 10px;
-    background-color: #007BFF;
+    background-color: #45922f;
     color: #fff;
     border: none;
     border-radius: 3px;
     cursor: pointer;
   }
   
-  .btn:hover {
-    background-color: #0056b3;
+  button:hover {
+    background-color: #266118;
   }
   

@@ -195,7 +195,7 @@ function RegisterCustomer() {
               {errors.address && <p className="error">{errors.address}</p>}
             </div>
 
-            <button type="submit" className="btn btn-primary mt-4" onClick={save}>
+            <button type="submit" onClick={save}>
               Save
             </button>
           </form>

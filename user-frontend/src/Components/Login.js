@@ -53,17 +53,18 @@ function Login() {
   }
       
     return (
-       <div>
-            <div class="container">
-            <div class="row">
+      <div>
+       
+            <div className="container">
+            <div>
                 <h2>Login</h2>
              <hr/>
              </div>
-             <div class="row">
-             <div class="col-sm-6">
+             <div>
+             <div>
  
             <form>
-        <div class="form-group">
+        <div className="form-group">
           <label>Email</label>
           <input type="email"  class="form-control" id="email" placeholder="Enter Email"
           
@@ -85,7 +86,7 @@ function Login() {
             
             />
           </div>
-                  <button type="submit" class="btn btn-primary" onClick={login} >Login</button>
+                  <button type="submit" onClick={login}>Login</button>
               </form>
             </div>
             </div>
