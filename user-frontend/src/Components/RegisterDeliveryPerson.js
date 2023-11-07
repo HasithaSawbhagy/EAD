@@ -6,6 +6,7 @@ function RegisterDeliveryPerson() {
   const [email, setEmail] = useState("");
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [role, setRole] = useState("");
   const [telephone, setTelephone] = useState("");
   const [areaCode, setAreaCode] = useState("");
@@ -23,6 +24,12 @@ function RegisterDeliveryPerson() {
     return telephoneRegex.test(telephone);
   };
 
+  const validateAreaCode = (areaCode) => {
+    // Area code validation regex (5 digits only)
+    const areaCodeRegex = /^\d{5}$/;
+    return areaCodeRegex.test(areaCode);
+  };
+
   const validateForm = () => {
     const errors = {};
 
@@ -38,6 +45,8 @@ function RegisterDeliveryPerson() {
 
     if (!password.trim()) {
       errors.password = "Password is required";
+    } else if (password !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
     }
 
     if (!role.trim()) {
@@ -49,6 +58,13 @@ function RegisterDeliveryPerson() {
     } else if (!validateTelephone(telephone)) {
       errors.telephone = "Invalid telephone number (10 digits required)";
     }
+
+    if (!areaCode.trim()) {
+      errors.areaCode = "Area Code is required";
+    } else if (!validateAreaCode(areaCode)) {
+      errors.areaCode = "Invalid area code format (5 digits required)";
+    }
+
 
     setErrors(errors);
     return Object.keys(errors).length === 0; // Return true if there are no errors
@@ -127,6 +143,23 @@ function RegisterDeliveryPerson() {
             </div>
 
             <div className="form-group">
+              <label>Confirm Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="confirmPassword"
+                placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={(event) => {
+                  setConfirmPassword(event.target.value);
+                }}
+              />
+              {errors.confirmPassword && (
+                <p className="error">{errors.confirmPassword}</p>
+              )}
+            </div>
+
+            <div className="form-group">
               <label>Role</label>
               <input
                 type="text"
@@ -162,12 +195,13 @@ function RegisterDeliveryPerson() {
                 type="text"
                 className="form-control"
                 id="areaCode"
-                placeholder="Enter area code"
+                placeholder="Enter area code (e.g., 12345-only 5 digits)"
                 value={areaCode}
                 onChange={(event) => {
                   setAreaCode(event.target.value);
                 }}
               />
+              {errors.areaCode && <p className="error">{errors.areaCode}</p>}
             </div>
 
             <button type="submit" className="btn btn-primary mt-4" onClick={save}>

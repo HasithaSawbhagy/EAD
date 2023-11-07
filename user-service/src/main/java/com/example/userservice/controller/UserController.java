@@ -3,12 +3,17 @@ package com.example.userservice.controller;
 import com.example.userservice.entity.DelveryPerson;
 import com.example.userservice.entity.InventoryKeeper;
 import com.example.userservice.entity.User;
+import com.example.userservice.exception.NotFoundException;
+import com.example.userservice.repository.DelveryPersonRepository;
+import com.example.userservice.repository.InventoryKeeperRepository;
+import com.example.userservice.repository.UserRepository;
 import com.example.userservice.security.JwtTokenProvider;
 import com.example.userservice.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -16,8 +21,21 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/users")
 public class UserController {
+    @Autowired
     private final UserService userservice;
+    @Autowired
     private final JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private  UserRepository userRepository;
+
+
+    @Autowired
+    private DelveryPersonRepository delveryPersonRepository;
+
+    @Autowired
+    private InventoryKeeperRepository inventoryKeeperRepository;
+
     @Autowired
     public UserController(UserService userservice, JwtTokenProvider jwtTokenProvider) {
         this.userservice = userservice;
@@ -72,6 +90,36 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid or expired token");
         }
+    }
+
+    //delete cutomer record  with given id
+    @DeleteMapping("/deleteCustomer/{id}")
+    String deleteCustomer(@PathVariable Long id){
+        if (!userRepository.existsById(id)){
+            throw new NotFoundException(("Customer not found with id: " + id));
+        }
+        userRepository.deleteById(id);
+        return "Customer with id " +id+ "has been deleted";
+    }
+
+    //delete delivery person record  with given id
+    @DeleteMapping("/deleteDeliveryPerson/{id}")
+    String deleteDeliveryPerson(@PathVariable Long id){
+        if (!delveryPersonRepository.existsById(id)){
+            throw new NotFoundException(("Delivery Person not found with id: " + id));
+        }
+        delveryPersonRepository.deleteById(id);
+        return "Delivery Person with id " +id+ "has been deleted";
+    }
+
+    //delete Inventory Keeper record  with given id
+    @DeleteMapping("/deleteInventoryKeeper/{id}")
+    String deleteInventoryKeeper(@PathVariable Long id){
+        if (!inventoryKeeperRepository.existsById(id)){
+            throw new NotFoundException(("Inventory Keeper not found with id: " + id));
+        }
+        inventoryKeeperRepository.deleteById(id);
+        return "Inventory Keeper with id " +id+ "has been deleted";
     }
 
 }

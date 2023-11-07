@@ -1,6 +1,6 @@
 import { BrowserRouter,Routes,Route } from "react-router-dom";
 import Home from "./Components/home";
-import Register from "./Components/Register";
+
 import Login from "./Components/Login";
 import RegisterCustomer from "./Components/RegisterCustomer";
 import RegisterInventoryKeeper from "./Components/RegisterInventoryKeeper";
@@ -13,7 +13,7 @@ function App() {
       <BrowserRouter>
             <Routes>
               <Route path="/home" element= { <Home/>} />
-              <Route path="/register" element= { <Register/>} />
+            
               <Route path="/" element= { <Login/>} />
               <Route path="/registerCustomer" element= { <RegisterCustomer/>} />
               <Route path="/registerInventoryKeeper" element= { <RegisterInventoryKeeper/>} />
