@@ -2,6 +2,7 @@ package com.springbootExample1.productservice.service;
 
 import com.springbootExample1.productservice.dto.DeliveryRequest;
 import com.springbootExample1.productservice.dto.DeliveryResponse;
+import com.springbootExample1.productservice.dto.DeliveryUpdate;
 import com.springbootExample1.productservice.model.Delivery;
 import com.springbootExample1.productservice.repository.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
@@ -64,13 +65,14 @@ public class DeliveryService {
         deliveryRepository.save(delivery);
         log.info("Delivery {} is completed.", id);
     }
-    public void updateDeliveryPersonInfo(String id, String delPersonId, String delPersonName) {
+    public void updateDeliveryPersonInfo(String id, DeliveryUpdate deliveryUpdate) {
         Delivery delivery = deliveryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Delivery not found"));
-        delivery.setDelPerson_id(delPersonId);
-        delivery.setDelPerson_name(delPersonName);
+        delivery.setDelPerson_id(deliveryUpdate.getDelPerson_id());
+        delivery.setDelPerson_name(deliveryUpdate.getDelPerson_name());
+        delivery.setStatus(deliveryUpdate.getStatus());
         deliveryRepository.save(delivery);
-        log.info("Delivery {} updated with delivery person info: ID={}, Name={}", id, delPersonId, delPersonName);
+        log.info("Delivery {} updated with delivery person info: ID={}, Name={}", id, deliveryUpdate.getDelPerson_id(), deliveryUpdate.getDelPerson_name());
     }
     public DeliveryResponse getDeliveryById(String id) {
         Delivery delivery = deliveryRepository.findById(id)

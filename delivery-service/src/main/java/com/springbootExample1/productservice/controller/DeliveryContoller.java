@@ -2,6 +2,7 @@ package com.springbootExample1.productservice.controller;
 
 import com.springbootExample1.productservice.dto.DeliveryRequest;
 import com.springbootExample1.productservice.dto.DeliveryResponse;
+import com.springbootExample1.productservice.dto.DeliveryUpdate;
 import com.springbootExample1.productservice.service.DeliveryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,9 +42,8 @@ deliveryService.createDelivery(deliveryRequest);
 
     @PutMapping("/{id}/assignDeliveryPerson")
     @ResponseStatus(HttpStatus.OK)
-    public void updateDeliveryPersonInfo(@PathVariable String id, @RequestParam String delPersonId,
-            @RequestParam String delPersonName) {
-        deliveryService.updateDeliveryPersonInfo(id, delPersonId, delPersonName);
+    public void updateDeliveryPersonInfo(@PathVariable String id, @RequestBody DeliveryUpdate deliveryUpdate) {
+        deliveryService.updateDeliveryPersonInfo(id, deliveryUpdate);
     }
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
