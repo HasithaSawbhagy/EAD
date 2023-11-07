@@ -6,7 +6,13 @@ import com.springbootExample1.productservice.model.Delivery;
 import com.springbootExample1.productservice.repository.DeliveryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -17,24 +23,23 @@ public class DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
 
-    public void createDelivery(DeliveryRequest deliveryRequest) {
-        Delivery delivery = Delivery.builder()
+    public void createDelivery(DeliveryRequest deliveryRequest){
+        Delivery delivery= Delivery.builder()
                 .order_id(deliveryRequest.getOrder_id())
                 .delPerson_id(deliveryRequest.getDelPerson_id())
                 .delPerson_name(deliveryRequest.getDelPerson_name())
                 .status(deliveryRequest.getStatus())
                 .build();
         deliveryRepository.save(delivery);
-        log.info("Delivery {} is saved", delivery.getId());
+        log.info("Delivery {} is saved",delivery.getId());
 
     }
 
     public List<DeliveryResponse> getAllDelivery() {
-        List<Delivery> deliveries = deliveryRepository.findAll();
+        List<Delivery> deliveries=deliveryRepository.findAll();
         return deliveries.stream().map(this::mapToDeliveryResponse).toList();
     }
-
-    private DeliveryResponse mapToDeliveryResponse(Delivery delivery) {
+    private DeliveryResponse mapToDeliveryResponse (Delivery delivery){
         return DeliveryResponse.builder()
                 .id(delivery.getId())
                 .order_id(delivery.getOrder_id())
@@ -44,7 +49,7 @@ public class DeliveryService {
                 .build();
     }
 
-    public void assignDelivery(String id) {
+     public void assignDelivery(String id) {
         Delivery delivery = deliveryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Delivery not found"));
         delivery.setStatus("on the way");
@@ -59,7 +64,6 @@ public class DeliveryService {
         deliveryRepository.save(delivery);
         log.info("Delivery {} is completed.", id);
     }
-
     public void updateDeliveryPersonInfo(String id, String delPersonId, String delPersonName) {
         Delivery delivery = deliveryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Delivery not found"));
@@ -75,3 +79,12 @@ public class DeliveryService {
         return mapToDeliveryResponse(delivery);
     }
 }
+
+
+
+
+  
+    
+
+
+

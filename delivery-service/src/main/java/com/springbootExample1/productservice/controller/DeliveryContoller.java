@@ -10,22 +10,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/delivery")
+@RequestMapping("/api/delivery") 
 @RequiredArgsConstructor
 public class DeliveryContoller {
     private final DeliveryService deliveryService;
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
 
-    public void createDelivery(@RequestBody DeliveryRequest deliveryRequest) {
-        deliveryService.createDelivery(deliveryRequest);
+    public void createDelivery(@RequestBody DeliveryRequest deliveryRequest){
+deliveryService.createDelivery(deliveryRequest);
 
     }
-
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<DeliveryResponse> getAllDelivery() {
+    public List<DeliveryResponse>getAllDelivery(){
         return deliveryService.getAllDelivery();
     }
 
@@ -52,4 +50,11 @@ public class DeliveryContoller {
     public DeliveryResponse getDeliveryById(@PathVariable String id) {
         return deliveryService.getDeliveryById(id);
    }
+
 }
+
+
+
+
+
+
