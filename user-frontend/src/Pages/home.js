@@ -25,24 +25,26 @@ function Home() {
 
   return (
     <div className="home-container">
-      <h1>Home</h1>
+      
       {showButtons && (
+        
         <div>
-          <button className="action-button" onClick={handleLoginClick}>
+          <h1>Home</h1>
+          <button className="action-button1" onClick={handleLoginClick}>
             Login
           </button>
-          <button className="action-button" onClick={handleRegisterClick}>
+          <button className="action-button1" onClick={handleRegisterClick}>
             Register
           </button>
         </div>
       )}
 
       {!showButtons && (
-        <div>
+        <div className="role-container" >
           <p>Select user role:</p>
-          <button onClick={() => handleUserRoleSelection('CUSTOMER')}>Customer</button>
-          <button onClick={() => handleUserRoleSelection('INVENTORY_MANAGER')}>Inventory Manager</button>
-          <button onClick={() => handleUserRoleSelection('DELIVERY_PERSON')}>Delivery Person</button>
+          <button className="action-button" onClick={() => handleUserRoleSelection('CUSTOMER')}>Customer</button>
+          <button className="action-button" onClick={() => handleUserRoleSelection('INVENTORY_MANAGER')}>Inventory Manager</button>
+          <button className="action-button" onClick={() => handleUserRoleSelection('DELIVERY_PERSON')}>Delivery Person</button>
         </div>
       )}
     </div>
