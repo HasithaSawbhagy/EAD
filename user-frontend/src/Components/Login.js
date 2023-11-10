@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import jwt_decode, { jwtDecode } from "jwt-decode";
 import "../Css/login.css"
+import React from 'react';
 
 function Login() {
    
@@ -29,22 +30,17 @@ function Login() {
 
               console.log(decodedUser);
               
-              // Now, you can handle different user roles
-              if (decodedUser.sub === 'CUSTOMER') {
-                  // Redirect to the customer dashboard or show customer-specific content
-                  navigate('/register');
-              } else if (decodedUser.sub === 'INVENTORY_MANAGER') {
-                  // Redirect to the inventory manager dashboard or show inventory manager-specific content
-                  navigate('/register');
-              } else if (decodedUser.sub === 'DELIVERY_PERSON') {
-                  // Redirect to the delivery person dashboard or show delivery person-specific content
-                  navigate('/register');
-              }
-           else {
-              // Unsuccessful login; handle the error message
-              console.error('Login failed: ' + response.data);
-              alert("Login failed. Please check your credentials.");
-          }
+              if (decodedUser.role === 'CUSTOMER') {
+                // Pass user information to the customer page
+                navigate('/customer', { state: { user: decodedUser } });
+            } else if (decodedUser.role === 'INVENTORY_MANAGER') {
+                navigate('/inventoryManager', { state: { user: decodedUser } });
+            } else if (decodedUser.role === 'DELIVERY_PERSON') {
+                navigate('/deliveryPerson', { state: { user: decodedUser } });
+            } else {
+                console.error('Login failed: ' + response.data);
+                alert("Login failed. Please check your credentials.");
+            }
       } catch (error) {
           // Handle network errors or other issues
           console.error('Error:', error);
@@ -52,47 +48,49 @@ function Login() {
       }
   }
       
-    return (
-      <div>
-       
-            <div className="container">
+  return (
+    <div>
+        <div className="container">
             <div>
                 <h2>Login</h2>
-             <hr/>
-             </div>
-             <div>
-             <div>
- 
-            <form>
-        <div className="form-group">
-          <label>Email</label>
-          <input type="email"  class="form-control" id="email" placeholder="Enter Email"
-          
-          value={email}
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-          
-          />
+                <hr />
+            </div>
+            <div>
+                <div>
+                    <form onSubmit={login}>
+                        <div className="form-group">
+                            <label>Email</label>
+                            <input
+                                type="email"
+                                className="form-control"
+                                id="email"
+                                placeholder="Enter Email"
+                                value={email}
+                                onChange={(event) => {
+                                    setEmail(event.target.value);
+                                }}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="password"
+                                placeholder="Enter Password"
+                                value={password}
+                                onChange={(event) => {
+                                    setPassword(event.target.value);
+                                }}
+                            />
+                        </div>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password"  class="form-control" id="password" placeholder="Enter Password"
-            
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-            
-            />
-          </div>
-                  <button type="submit" onClick={login}>Login</button>
-              </form>
-            </div>
-            </div>
-            </div>
-     </div>
-    );
+    </div>
+);
   }
   
   export default Login;

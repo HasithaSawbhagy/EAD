@@ -11,15 +11,12 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(unique = true)
     private String email;
     private String fullName;
-    @Size(min = 4)
     private String password;
     private UserRole role;
     private String telephone;
-
     private String address;
 
     public String getAddress() {

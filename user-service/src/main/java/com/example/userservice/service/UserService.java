@@ -1,9 +1,10 @@
 package com.example.userservice.service;
 
-import com.example.userservice.entity.DelveryPerson;
+import com.example.userservice.entity.DeliveryPerson;
 import com.example.userservice.entity.InventoryKeeper;
 import com.example.userservice.entity.User;
-import com.example.userservice.repository.DelveryPersonRepository;
+import com.example.userservice.exception.NotFoundException;
+import com.example.userservice.repository.DeliveryPersonRepository;
 import com.example.userservice.repository.InventoryKeeperRepository;
 import com.example.userservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-   @Autowired
+    @Autowired
     private final UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private DelveryPersonRepository delveryPersonRepository;
+    private DeliveryPersonRepository deliveryPersonRepository;
 
     @Autowired
     private InventoryKeeperRepository inventoryKeeperRepository;
@@ -29,6 +30,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    //customer registration
     public User saveUser(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
@@ -36,10 +38,10 @@ public class UserService {
     }
 
     //deliver person registration
-    public DelveryPerson saveDelveryPerson(DelveryPerson delveryPerson) {
-        String encodedPassword = passwordEncoder.encode(delveryPerson.getPassword());
-        delveryPerson.setPassword(encodedPassword);
-        return delveryPersonRepository.save(delveryPerson);
+    public DeliveryPerson saveDelveryPerson(DeliveryPerson deliveryPerson) {
+        String encodedPassword = passwordEncoder.encode(deliveryPerson.getPassword());
+        deliveryPerson.setPassword(encodedPassword);
+        return deliveryPersonRepository.save(deliveryPerson);
     }
 
     //InventoryKeeper registration
@@ -63,13 +65,48 @@ public class UserService {
         }
 
         // If not an INVENTORY_MANAGER, try to authenticate as a DELIVERY_PERSON
-        DelveryPerson deliveryPerson = delveryPersonRepository.findByEmail(email);
+        DeliveryPerson deliveryPerson = deliveryPersonRepository.findByEmail(email);
         if (deliveryPerson != null && passwordEncoder.matches(password, deliveryPerson.getPassword())) {
             return deliveryPerson;
         }
-
         // If no match is found, return null
         return null;
+    }
+
+
+    //update customer
+    public User updateUser(Long id, User user) {
+        User existingUser =userRepository.findById(id).orElseThrow(() -> new NotFoundException("Customer not found"));
+        existingUser.setFullName(user.getFullName());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setAddress(user.getAddress());
+        existingUser.setRole(user.getRole());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setTelephone(user.getTelephone());
+        return userRepository.save(existingUser);
+    }
+
+    //update delivery person
+    public DeliveryPerson updateDeliveryPerson(Long id, DeliveryPerson deliveryPerson) {
+        DeliveryPerson existingDeliveryPerson =deliveryPersonRepository.findById(id).orElseThrow(() -> new NotFoundException("Delivery Person not found"));
+        existingDeliveryPerson.setFullName(deliveryPerson.getFullName());
+        existingDeliveryPerson.setPassword(deliveryPerson.getPassword());
+        existingDeliveryPerson.setEmail(deliveryPerson.getEmail());
+        existingDeliveryPerson.setAreaCode(deliveryPerson.getAreaCode());
+        existingDeliveryPerson.setTelephone(deliveryPerson.getTelephone());
+        existingDeliveryPerson.setRole(deliveryPerson.getRole());
+        return deliveryPersonRepository.save(existingDeliveryPerson);
+    }
+
+    //update inventory keeper
+    public InventoryKeeper updateInventoryKeeper(Long id, InventoryKeeper inventoryKeeper) {
+        InventoryKeeper existingInventoryKeeper =inventoryKeeperRepository.findById(id).orElseThrow(() -> new NotFoundException("Delivery Person not found"));
+        existingInventoryKeeper.setFullName(inventoryKeeper.getFullName());
+        existingInventoryKeeper.setPassword(inventoryKeeper.getPassword());
+        existingInventoryKeeper.setEmail(inventoryKeeper.getEmail());
+        existingInventoryKeeper.setTelephone(inventoryKeeper.getTelephone());
+        existingInventoryKeeper.setRole(inventoryKeeper.getRole());
+        return inventoryKeeperRepository.save(existingInventoryKeeper);
     }
 }
 
