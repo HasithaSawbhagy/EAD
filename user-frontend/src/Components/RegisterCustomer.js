@@ -58,23 +58,46 @@ function RegisterCustomer() {
   };
 
   async function save(event) {
-    event.preventDefault();
+  event.preventDefault();
 
+  try {
     if (validateForm()) {
-      try {
-        await axios.post("http://localhost:8080/users/register", {
-          email: email,
-          fullName: fullName,
-          password: password,
-          telephone: telephone,
-          address: address,
-        });
-        alert("User Registration Successfully");
-      } catch (err) {
-        alert(err);
-      }
+      await axios.post("http://localhost:8080/users/register", {
+        email: email,
+        fullName: fullName,
+        password: password,
+        telephone: telephone,
+        address: address,
+      });
+      alert("User Registration Successfully");
     }
-  }
+  } catch (err) {
+    if (err.response) {
+      // The request was made and the server responded with an error status
+      const errorData = err.response.data;
+      const newErrors = {};
+
+      // Assuming the backend returns an array of error messages
+      if (Array.isArray(errorData)) {
+        errorData.forEach((error) => {
+          // Parse the error messages and update the errors state
+          const field = error.field.toLowerCase();
+          newErrors[field] = error.message;
+        });
+      } else if (typeof errorData === 'string') {
+        // If the backend returns a single error message
+        // You can handle it accordingly
+        // For example, you can display a general error message
+        alert(errorData);
+      }
+
+      setErrors(newErrors);
+    } else {
+      // Handle other types of errors (e.g., network issues)
+      alert("An error occurred while processing your request.");
+    }
+  }
+}
 
   return (
     <div>
