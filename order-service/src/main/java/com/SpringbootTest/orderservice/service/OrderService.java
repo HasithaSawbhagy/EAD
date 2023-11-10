@@ -38,6 +38,7 @@ public class OrderService {
                     .order_date(todayDate)
                     .status("pending")
                     .delivery_address(orderRequest.getDelivery_address())
+                    .contact(orderRequest.getContact())
                     .totalCost(initialTotalCost)  // Set totalCost initially to a specific BigDecimal value
                     .build();
 
@@ -70,6 +71,7 @@ public class OrderService {
                 .order_date(order.getOrder_date())
                 .status(order.getStatus())
                 .delivery_address(order.getDelivery_address())
+                .contact(order.getContact())
                 .totalCost(order.getTotalCost())
                 .build();
     }

@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class OrderRequest {
     private String user_id;
     private String delivery_address;
+    private Long contact;
 }
