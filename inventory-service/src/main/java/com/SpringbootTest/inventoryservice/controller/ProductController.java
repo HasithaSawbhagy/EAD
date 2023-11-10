@@ -41,12 +41,22 @@ public class ProductController {
     //find whether the product is in stock or not
     @GetMapping("isInStock")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Boolean> isProductQuantityGreaterThanZero(@RequestParam String id,@RequestParam int quantity) {
+    public ResponseEntity<Boolean> isProductQuantityGreaterThanZero(@RequestParam String id, @RequestParam int quantity) {
         Product product = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product is not found with id:" + id));
         int stockQuantity = Integer.parseInt(product.getQuantity());
-        boolean isQuantityGreaterThanZero = stockQuantity > 0 && stockQuantity>=quantity;
+
+        boolean isQuantityGreaterThanZero = stockQuantity > 0 && stockQuantity >= quantity;
+
+        if (isQuantityGreaterThanZero) {
+            // Update the stockQuantity after checking if the product is in stock
+            int updatedStockQuantity = stockQuantity - quantity;
+            product.setQuantity(String.valueOf(updatedStockQuantity));
+            productRepository.save(product);
+        }
+
         return ResponseEntity.ok(isQuantityGreaterThanZero);
     }
+
 
 
     //get all products
