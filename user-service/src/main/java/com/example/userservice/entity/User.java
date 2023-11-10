@@ -21,4 +21,16 @@ public class User {
     private String telephone;
     private String address;
 
+    public User(String email, String fullName, String password, UserRole role, String telephone, String address) {
+        this.email = email;
+        this.fullName = fullName;
+        this.password = password;
+        this.role = role;
+        this.telephone = telephone;
+        this.address = address;
+    }
+
+    public User() {
+
+    }
 }

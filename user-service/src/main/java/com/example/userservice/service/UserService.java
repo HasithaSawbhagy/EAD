@@ -1,5 +1,7 @@
 package com.example.userservice.service;
 
+import com.example.userservice.dto.DeliveryPersonDTO;
+import com.example.userservice.dto.InventoryKeeperDTO;
 import com.example.userservice.dto.UserDTO;
 import com.example.userservice.entity.DeliveryPerson;
 import com.example.userservice.entity.InventoryKeeper;
@@ -31,8 +33,7 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    @Autowired
-    private UserDTO userDTO;
+
 
     //customer registration
     public User saveUser(UserDTO userDTO) {
@@ -40,6 +41,7 @@ public class UserService {
                 userDTO.getEmail(),
                 userDTO.getFullName(),
                 this.passwordEncoder.encode(userDTO.getPassword()),
+                userDTO.getRole(),
                 userDTO.getTelephone(),
                 userDTO.getAddress()
 
@@ -49,16 +51,34 @@ public class UserService {
     }
 
     //deliver person registration
-    public DeliveryPerson saveDelveryPerson(DeliveryPerson deliveryPerson) {
-        String encodedPassword = passwordEncoder.encode(deliveryPerson.getPassword());
-        deliveryPerson.setPassword(encodedPassword);
+    public DeliveryPerson saveDelveryPerson(DeliveryPersonDTO deliveryPersonDTO) {
+
+        DeliveryPerson deliveryPerson = new DeliveryPerson(
+                deliveryPersonDTO.getEmail(),
+                deliveryPersonDTO.getFullName(),
+                this.passwordEncoder.encode(deliveryPersonDTO.getPassword()),
+                deliveryPersonDTO.getRole(),
+                deliveryPersonDTO.getTelephone(),
+                deliveryPersonDTO.getAreaCode()
+
+        );
+
         return deliveryPersonRepository.save(deliveryPerson);
     }
 
     //InventoryKeeper registration
-    public InventoryKeeper saveInventoryKeeper(InventoryKeeper inventoryKeeper) {
-        String encodedPassword = passwordEncoder.encode(inventoryKeeper.getPassword());
-        inventoryKeeper.setPassword(encodedPassword);
+    public InventoryKeeper saveInventoryKeeper(InventoryKeeperDTO inventoryKeeperDTO) {
+
+        InventoryKeeper inventoryKeeper = new InventoryKeeper(
+                inventoryKeeperDTO.getEmail(),
+                inventoryKeeperDTO.getFullName(),
+                this.passwordEncoder.encode(inventoryKeeperDTO.getPassword()),
+                inventoryKeeperDTO.getRole(),
+                inventoryKeeperDTO.getTelephone()
+
+        );
+
+
         return inventoryKeeperRepository.save(inventoryKeeper);
     }
 
@@ -86,14 +106,13 @@ public class UserService {
 
 
     //update customer
-    public User updateUser(Long id, User user) {
+    public User updateUser(Long id, UserDTO userDTO) {
         User existingUser =userRepository.findById(id).orElseThrow(() -> new NotFoundException("Customer not found"));
-        existingUser.setFullName(user.getFullName());
-        existingUser.setPassword(user.getPassword());
-        existingUser.setAddress(user.getAddress());
-        existingUser.setRole(user.getRole());
-        existingUser.setEmail(user.getEmail());
-        existingUser.setTelephone(user.getTelephone());
+        existingUser.setFullName(userDTO.getFullName());
+        existingUser.setPassword(userDTO.getPassword());
+        existingUser.setAddress(userDTO.getAddress());
+        existingUser.setEmail(userDTO.getEmail());
+        existingUser.setTelephone(userDTO.getTelephone());
         return userRepository.save(existingUser);
     }
 

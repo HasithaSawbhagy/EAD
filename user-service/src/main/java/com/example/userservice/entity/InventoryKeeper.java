@@ -19,4 +19,15 @@ public class InventoryKeeper {
     private UserRole role;
     private String telephone;
 
+    public InventoryKeeper(String email, String fullName, String password, UserRole role, String telephone) {
+        this.email = email;
+        this.fullName = fullName;
+        this.password = password;
+        this.role = role;
+        this.telephone = telephone;
+    }
+
+    public InventoryKeeper() {
+
+    }
 }
