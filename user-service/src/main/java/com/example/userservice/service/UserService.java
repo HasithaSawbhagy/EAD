@@ -109,7 +109,8 @@ public class UserService {
     public User updateUser(Long id, UserDTO userDTO) {
         User existingUser =userRepository.findById(id).orElseThrow(() -> new NotFoundException("Customer not found"));
         existingUser.setFullName(userDTO.getFullName());
-        existingUser.setPassword(userDTO.getPassword());
+        existingUser.setPassword(this.passwordEncoder.encode(userDTO.getPassword()));
+
         existingUser.setAddress(userDTO.getAddress());
         existingUser.setEmail(userDTO.getEmail());
         existingUser.setTelephone(userDTO.getTelephone());
@@ -117,25 +118,23 @@ public class UserService {
     }
 
     //update delivery person
-    public DeliveryPerson updateDeliveryPerson(Long id, DeliveryPerson deliveryPerson) {
+    public DeliveryPerson updateDeliveryPerson(Long id, DeliveryPersonDTO deliveryPersonDTO) {
         DeliveryPerson existingDeliveryPerson =deliveryPersonRepository.findById(id).orElseThrow(() -> new NotFoundException("Delivery Person not found"));
-        existingDeliveryPerson.setFullName(deliveryPerson.getFullName());
-        existingDeliveryPerson.setPassword(deliveryPerson.getPassword());
-        existingDeliveryPerson.setEmail(deliveryPerson.getEmail());
-        existingDeliveryPerson.setAreaCode(deliveryPerson.getAreaCode());
-        existingDeliveryPerson.setTelephone(deliveryPerson.getTelephone());
-        existingDeliveryPerson.setRole(deliveryPerson.getRole());
+        existingDeliveryPerson.setFullName(deliveryPersonDTO.getFullName());
+        existingDeliveryPerson.setPassword(this.passwordEncoder.encode(deliveryPersonDTO.getPassword()));
+        existingDeliveryPerson.setEmail(deliveryPersonDTO.getEmail());
+        existingDeliveryPerson.setAreaCode(deliveryPersonDTO.getAreaCode());
+        existingDeliveryPerson.setTelephone(deliveryPersonDTO.getTelephone());
         return deliveryPersonRepository.save(existingDeliveryPerson);
     }
 
     //update inventory keeper
-    public InventoryKeeper updateInventoryKeeper(Long id, InventoryKeeper inventoryKeeper) {
+    public InventoryKeeper updateInventoryKeeper(Long id, InventoryKeeperDTO inventoryKeeperDTO) {
         InventoryKeeper existingInventoryKeeper =inventoryKeeperRepository.findById(id).orElseThrow(() -> new NotFoundException("Delivery Person not found"));
-        existingInventoryKeeper.setFullName(inventoryKeeper.getFullName());
-        existingInventoryKeeper.setPassword(inventoryKeeper.getPassword());
-        existingInventoryKeeper.setEmail(inventoryKeeper.getEmail());
-        existingInventoryKeeper.setTelephone(inventoryKeeper.getTelephone());
-        existingInventoryKeeper.setRole(inventoryKeeper.getRole());
+        existingInventoryKeeper.setFullName(inventoryKeeperDTO.getFullName());
+        existingInventoryKeeper.setPassword(this.passwordEncoder.encode(inventoryKeeperDTO.getPassword()));
+        existingInventoryKeeper.setEmail(inventoryKeeperDTO.getEmail());
+        existingInventoryKeeper.setTelephone(inventoryKeeperDTO.getTelephone());
         return inventoryKeeperRepository.save(existingInventoryKeeper);
     }
 }

@@ -2,6 +2,7 @@ package com.example.userservice.controller;
 
 import com.example.userservice.dto.DeliveryPersonDTO;
 import com.example.userservice.dto.InventoryKeeperDTO;
+import com.example.userservice.dto.LoginDTO;
 import com.example.userservice.dto.UserDTO;
 import com.example.userservice.entity.DeliveryPerson;
 import com.example.userservice.entity.InventoryKeeper;
@@ -196,8 +197,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody User loginUser) {
-        Object authenticatedUser = userservice.loginUser(loginUser.getEmail(), loginUser.getPassword());
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginDTO loginDTO) {
+        Object authenticatedUser = userservice.loginUser(loginDTO.getEmail(), loginDTO.getPassword());
 
         if (authenticatedUser != null) {
             if (authenticatedUser instanceof User) {
@@ -258,11 +259,13 @@ public class UserController {
     }
 
     //update customer
-   /* @PutMapping("/updateCustomer/{id}")
+        /*
+    @PutMapping("/updateCustomer/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody User user) {
         User updatedUser = userservice.updateUser(id, user);
         return ResponseEntity.ok(updatedUser);
-    }*/
+    }
+ */
 
     @PutMapping("/updateCustomer/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody UserDTO userDTO) {
@@ -270,17 +273,18 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
 
+
     //update delivery person
     @PutMapping("/updateDeliveryPerson/{id}")
-    public ResponseEntity<DeliveryPerson> updateDeliveryPerson(@PathVariable("id") Long id, @RequestBody DeliveryPerson deliveryPerson) {
-        DeliveryPerson updatedDeliveryPerson = userservice.updateDeliveryPerson(id, deliveryPerson);
+    public ResponseEntity<DeliveryPerson> updateDeliveryPerson(@PathVariable("id") Long id, @RequestBody DeliveryPersonDTO deliveryPersonDTO) {
+        DeliveryPerson updatedDeliveryPerson = userservice.updateDeliveryPerson(id, deliveryPersonDTO);
         return ResponseEntity.ok(updatedDeliveryPerson);
     }
 
     //update inventory keeper
     @PutMapping("/updateInventoryKeeper/{id}")
-    public ResponseEntity<InventoryKeeper> updateInventoryKeeper(@PathVariable("id") Long id, @RequestBody InventoryKeeper inventoryKeeper) {
-        InventoryKeeper updatedInventoryKeeper = userservice.updateInventoryKeeper(id, inventoryKeeper);
+    public ResponseEntity<InventoryKeeper> updateInventoryKeeper(@PathVariable("id") Long id, @RequestBody InventoryKeeperDTO inventoryKeeperDTO) {
+        InventoryKeeper updatedInventoryKeeper = userservice.updateInventoryKeeper(id, inventoryKeeperDTO);
         return ResponseEntity.ok(updatedInventoryKeeper);
     }
 
