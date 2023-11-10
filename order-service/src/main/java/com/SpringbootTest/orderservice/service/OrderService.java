@@ -11,6 +11,7 @@ import com.SpringbootTest.orderservice.repository.OrderItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,6 +27,8 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+
+    private final WebClient webClient;
 
     //Create Order
     public void createOrder(OrderRequest orderRequest){
@@ -79,6 +82,15 @@ public class OrderService {
         order.setStatus(orderStatusUpdate.getStatus());
         orderRepository.save(order);
         log.info("Order status updated for ID {}: {}", Id, orderStatusUpdate.getStatus());
+
+        if ("completed".equalsIgnoreCase(orderStatusUpdate.getStatus())) {
+            // Use the WebClient to make a POST request to the Delivery Micro Service
+            webClient.post()
+                    .uri("http://localhost:8083/api/delivery/create/{orderId}", Id)
+                    .retrieve()
+                    .bodyToMono(Void.class)
+                    .subscribe(); // Asynchronous call
+        }
 
     }
 

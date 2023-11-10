@@ -19,8 +19,14 @@ public class DeliveryContoller {
     @ResponseStatus(HttpStatus.CREATED)
 
     public void createDelivery(@RequestBody DeliveryRequest deliveryRequest){
-deliveryService.createDelivery(deliveryRequest);
+     deliveryService.createDelivery(deliveryRequest);
 
+    }
+
+    @PostMapping("/create/{orderId}")
+    public void createDeliveryForOrder(@PathVariable String orderId) {
+        // Create the delivery with default/null values for other fields
+        deliveryService.createDeliveryFoOrder(orderId);
     }
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

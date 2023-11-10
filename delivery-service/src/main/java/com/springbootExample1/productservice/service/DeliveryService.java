@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ import java.util.List;
 public class DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
+    private final WebClient webClient;
 
     public void createDelivery(DeliveryRequest deliveryRequest){
         Delivery delivery= Delivery.builder()
@@ -34,6 +36,19 @@ public class DeliveryService {
         deliveryRepository.save(delivery);
         log.info("Delivery {} is saved",delivery.getId());
 
+    }
+
+    public void createDeliveryFoOrder(String orderId) {
+        Delivery delivery = Delivery.builder()
+                .order_id(orderId)
+                // Set other fields to default or null values
+                .delPerson_id("Not Assign") // Example: Set to null
+                .delPerson_name("Not Assign") // Example: Set to null
+                .status("Not Assign") // Set to a default value
+                .build();
+
+        deliveryRepository.save(delivery);
+        log.info("Delivery {} is saved", delivery.getId());
     }
 
     public List<DeliveryResponse> getAllDelivery() {
