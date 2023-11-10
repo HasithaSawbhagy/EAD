@@ -36,7 +36,7 @@ public class OrderController {
     //Get All Order
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderResponse> getAllOrders(){
+    public List<OrderResponse> getAllOrders() {
         return orderService.getAllOrders();
     }
 
@@ -68,6 +68,7 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Order not found with ID: " + Id);
         }
     }
+
     @PatchMapping("/updateTotalCost/{orderId}")
     public ResponseEntity<String> updateOrderTotalCost(@PathVariable String orderId) {
         try {

@@ -57,8 +57,6 @@ public class ProductController {
         return ResponseEntity.ok(isQuantityGreaterThanZero);
     }
 
-
-
     //get all products
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
@@ -66,6 +64,7 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    //get product all details by id
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public Product getProductById(@PathVariable String id) {
@@ -82,7 +81,7 @@ public class ProductController {
         return "Product with id " + id + "has been deleted";
     }
 
-    //Update Product
+    //Update Product,can update single field or multiple fields
     @PutMapping("update/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable String id, @RequestBody Product product) {
         Product updateProduct = productService.updateProduct(id, product);
