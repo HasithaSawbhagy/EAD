@@ -44,7 +44,7 @@ public class OrderItemService {
 
             //call inventory service and place order if product is available in stock
             Boolean result = webClient.get()
-                    .uri("http://localhost:8080/api/product/isInStock?id={id}&quantity={quantity}", productId, quantity)
+                    .uri("http://localhost:8081/api/product/isInStock?id={id}&quantity={quantity}", productId, quantity)
                     .retrieve()
                     .bodyToMono(Boolean.class)
                     .block();

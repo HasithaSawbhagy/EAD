@@ -40,7 +40,7 @@ public class OrderItemController {
     public List<ProductResponse> getAllProductsFromInventoryService() {
         try {
             List<ProductResponse> products = webClient.get()
-                    .uri("http://localhost:8080/api/product") // Update the URI to match your actual endpoint
+                    .uri("http://localhost:8081/api/product") // Update the URI to match your actual endpoint
                     .retrieve()
                     .bodyToFlux(ProductResponse.class)
                     .collectList()
