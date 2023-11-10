@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -24,10 +25,15 @@ public class DeliveryContoller {
     }
 
     @PostMapping("/create/{orderId}")
-    public void createDeliveryForOrder(@PathVariable String orderId) {
-        // Create the delivery with default/null values for other fields
-        deliveryService.createDeliveryFoOrder(orderId);
+    public void createDeliveryForOrder(
+            @PathVariable String orderId,
+            @RequestParam(name = "deliveryAddress") String deliveryAddress,
+            @RequestParam(name = "contact") Long contact,
+            @RequestParam(name = "totalCost") BigDecimal totalCost) {
+        // Create the delivery with the provided delivery address
+        deliveryService.createDeliveryForOrder(orderId, deliveryAddress, contact, totalCost);
     }
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<DeliveryResponse>getAllDelivery(){

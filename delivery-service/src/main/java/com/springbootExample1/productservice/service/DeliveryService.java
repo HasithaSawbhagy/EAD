@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -38,18 +39,22 @@ public class DeliveryService {
 
     }
 
-    public void createDeliveryFoOrder(String orderId) {
+    public void createDeliveryForOrder(String orderId, String deliveryAddress, Long contact, BigDecimal totalCost) {
+        // Use the provided delivery address when creating the delivery
         Delivery delivery = Delivery.builder()
                 .order_id(orderId)
-                // Set other fields to default or null values
-                .delPerson_id("Not Assign") // Example: Set to null
-                .delPerson_name("Not Assign") // Example: Set to null
-                .status("Not Assign") // Set to a default value
+                .delPerson_id("Not Assign")
+                .delPerson_name("Not Assign")
+                .status("Not Assign")
+                .deliveryAddress(deliveryAddress) // Set the delivery address
+                .contact(contact)
+                .totalCost(totalCost)
                 .build();
 
         deliveryRepository.save(delivery);
-        log.info("Delivery {} is saved", delivery.getId());
+        log.info("Delivery {} is saved with delivery address: {}", delivery.getId(), deliveryAddress);
     }
+
 
     public List<DeliveryResponse> getAllDelivery() {
         List<Delivery> deliveries=deliveryRepository.findAll();
@@ -62,6 +67,9 @@ public class DeliveryService {
                 .delPerson_id(delivery.getDelPerson_id())
                 .delPerson_name(delivery.getDelPerson_name())
                 .status(delivery.getStatus())
+                .deliveryAddress(delivery.getDeliveryAddress())
+                .contact(delivery.getContact())
+                .totalCost(delivery.getTotalCost())
                 .build();
     }
 

@@ -22,6 +22,9 @@ public class Delivery {
     private String delPerson_id;
     private String delPerson_name;
     private String status = "pending";
+    private String deliveryAddress;
+    private Long contact;
+    private BigDecimal totalCost;
 
 }
 

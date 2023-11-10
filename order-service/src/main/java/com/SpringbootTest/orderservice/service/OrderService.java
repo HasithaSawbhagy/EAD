@@ -83,7 +83,21 @@ public class OrderService {
         orderRepository.save(order);
         log.info("Order status updated for ID {}: {}", Id, orderStatusUpdate.getStatus());
 
+        if ("completed".equalsIgnoreCase(orderStatusUpdate.getStatus())) {
+            // Get the delivery address from the order
+            String deliveryAddress = order.getDelivery_address();
+            Long contact = order.getContact();
+            BigDecimal totalCost = order.getTotalCost();
+
+            // Use the WebClient to make a POST request to the Delivery Micro Service
+            webClient.post()
+                    .uri("http://localhost:8083/api/delivery/create/{orderId}?deliveryAddress={deliveryAddress}&contact={contact}&totalCost={totalCost}", Id, deliveryAddress, contact, totalCost)
+                    .retrieve()
+                    .bodyToMono(Void.class)
+                    .subscribe(); // Asynchronous call
+        }
     }
+
 
     public void updateOrderAddress(String Id, OrderAddressUpdate orderAddressUpdate) {
         Order order = orderRepository.findById(Id)
