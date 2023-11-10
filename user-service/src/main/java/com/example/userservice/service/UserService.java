@@ -1,5 +1,6 @@
 package com.example.userservice.service;
 
+import com.example.userservice.dto.UserDTO;
 import com.example.userservice.entity.DeliveryPerson;
 import com.example.userservice.entity.InventoryKeeper;
 import com.example.userservice.entity.User;
@@ -30,10 +31,20 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Autowired
+    private UserDTO userDTO;
+
     //customer registration
-    public User saveUser(User user) {
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+    public User saveUser(UserDTO userDTO) {
+        User user = new User(
+                userDTO.getEmail(),
+                userDTO.getFullName(),
+                this.passwordEncoder.encode(userDTO.getPassword()),
+                userDTO.getTelephone(),
+                userDTO.getAddress()
+
+        );
+
         return userRepository.save(user);
     }
 

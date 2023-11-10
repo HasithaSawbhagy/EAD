@@ -12,3 +12,6 @@ public interface DeliveryPersonRepository extends JpaRepository<DeliveryPerson, 
 
     DeliveryPerson findByEmail(String email);
 }
+
+
+

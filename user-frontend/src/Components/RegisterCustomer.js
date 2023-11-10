@@ -7,7 +7,7 @@ function RegisterCustomer() {
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [role, setRole] = useState("");
+
   const [telephone, setTelephone] = useState("");
   const [address, setAddress] = useState("");
   const [errors, setErrors] = useState({});
@@ -43,10 +43,6 @@ function RegisterCustomer() {
       errors.confirmPassword = "Passwords do not match";
     }
 
-    if (!role.trim()) {
-      errors.role = "Role is required";
-    }
-
     if (!telephone.trim()) {
       errors.telephone = "Telephone is required";
     } else if (!validateTelephone(telephone)) {
@@ -70,7 +66,6 @@ function RegisterCustomer() {
           email: email,
           fullName: fullName,
           password: password,
-          role: role,
           telephone: telephone,
           address: address,
         });
@@ -85,7 +80,7 @@ function RegisterCustomer() {
     <div>
       <div className="container mt-4">
         <div className="card">
-          <h1>User Registration</h1>
+          <h1>Customer Registration</h1>
 
           <form>
             <div className="form-group">
@@ -150,20 +145,7 @@ function RegisterCustomer() {
               )}
             </div>
 
-            <div className="form-group">
-              <label>Role</label>
-              <input
-                type="text"
-                className="form-control"
-                id="role"
-                placeholder="Enter User Role"
-                value={role}
-                onChange={(event) => {
-                  setRole(event.target.value);
-                }}
-              />
-              {errors.role && <p className="error">{errors.role}</p>}
-            </div>
+           
 
             <div className="form-group">
               <label>Telephone</label>

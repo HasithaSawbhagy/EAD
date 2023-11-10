@@ -1,0 +1,10 @@
+/* Home.css */
+.home-container {
+    text-align: center;
+  }
+  
+  .action-button {
+    width: 120px; /* Set the desired width */
+    margin: 5px; /* Add margin for spacing */
+  }
+  

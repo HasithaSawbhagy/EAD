@@ -1,7 +1,7 @@
 import {  useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import jwt_decode, { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import "../Css/login.css"
 import React from 'react';
 

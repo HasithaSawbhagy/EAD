@@ -1,5 +1,8 @@
 package com.example.userservice.controller;
 
+import com.example.userservice.dto.DeliveryPersonDTO;
+import com.example.userservice.dto.InventoryKeeperDTO;
+import com.example.userservice.dto.UserDTO;
 import com.example.userservice.entity.DeliveryPerson;
 import com.example.userservice.entity.InventoryKeeper;
 import com.example.userservice.entity.User;
@@ -77,56 +80,119 @@ public class UserController {
         return matcher.matches();
     }
 
+    private boolean isValidAreaCode(String areaCode) {
+        // Area code format validation: exactly 5 digits
+        String areaCodeRegex = "^[0-9]{5}$";
+        Pattern pattern = Pattern.compile(areaCodeRegex);
+        Matcher matcher = pattern.matcher(areaCode);
+        return matcher.matches();
+    }
+
     @PostMapping("/register")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) {
         // Validate email format
-        if (!isValidEmail(user.getEmail())) {
+        if (!isValidEmail(userDTO.getEmail())) {
             return ResponseEntity.badRequest().body("Invalid email format");
         }
 
         // Validate telephone number format
-        if (!isValidTelephone(user.getTelephone())) {
+        if (!isValidTelephone(userDTO.getTelephone())) {
             return ResponseEntity.badRequest().body("Invalid telephone number format. It should contain exactly 10 digits.");
         }
 
         // Set the default role to customer if it's not already set
-        if (user.getRole() == null) {
-            user.setRole(UserRole.CUSTOMER);
+        if (userDTO.getRole() == null) {
+            userDTO.setRole(UserRole.CUSTOMER);
         }
 
         // Validate password format
-        if (!isValidPassword(user.getPassword())) {
+        if (!isValidPassword(userDTO.getPassword())) {
             return ResponseEntity.badRequest().body("Invalid password format. It should be at least 5 characters long and contain a mix of uppercase letters, lowercase letters, and digits.");
         }
 
         // Validate full name format
-        if (!isValidFullName(user.getFullName())) {
+        if (!isValidFullName(userDTO.getFullName())) {
             return ResponseEntity.badRequest().body("Invalid full name format. It should contain only letters.");
         }
 
         // Save the user
-        User savedUser = userservice.saveUser(user);
+        User savedUser = userservice.saveUser(userDTO);
 
         return ResponseEntity.ok(savedUser);
     }
 
     //deliver person registration
     @PostMapping("/register_DelveryPerson")
-    public DeliveryPerson createDelveryPerson(@RequestBody DeliveryPerson deliveryPerson) {
-        if (deliveryPerson.getRole() == null) {
-            deliveryPerson.setRole(UserRole.DELIVERY_PERSON);
+    public ResponseEntity<?> createDelveryPerson(@RequestBody DeliveryPersonDTO deliveryPersonDTO) {
+
+        // Validate email format
+        if (!isValidEmail(deliveryPersonDTO.getEmail())) {
+            return ResponseEntity.badRequest().body("Invalid email format");
         }
-        return userservice.saveDelveryPerson(deliveryPerson);
+
+        // Validate telephone number format
+        if (!isValidTelephone(deliveryPersonDTO.getTelephone())) {
+            return ResponseEntity.badRequest().body("Invalid telephone number format. It should contain exactly 10 digits.");
+        }
+
+        // Validate area code format
+        if (!isValidAreaCode(deliveryPersonDTO.getAreaCode())) {
+            return ResponseEntity.badRequest().body("Invalid area code format. It should contain exactly 5 digits.");
+        }
+
+        if (deliveryPersonDTO.getRole() == null) {
+            deliveryPersonDTO.setRole(UserRole.DELIVERY_PERSON);
+        }
+
+        // Validate password format
+        if (!isValidPassword(deliveryPersonDTO.getPassword())) {
+            return ResponseEntity.badRequest().body("Invalid password format. It should be at least 5 characters long and contain a mix of uppercase letters, lowercase letters, and digits.");
+        }
+
+        // Validate full name format
+        if (!isValidFullName(deliveryPersonDTO.getFullName())) {
+            return ResponseEntity.badRequest().body("Invalid full name format. It should contain only letters.");
+        }
+
+        // Save the user
+        DeliveryPerson savedDeliveryPerson = userservice.saveDelveryPerson(deliveryPersonDTO);
+
+        return ResponseEntity.ok(savedDeliveryPerson);
     }
 
 
     //Inventory Keeper registration
     @PostMapping("/register_InventoryKeeper")
-    public InventoryKeeper createInventoryKeeper(@Valid @RequestBody InventoryKeeper inventoryKeeper) {
-        if (inventoryKeeper.getRole() == null) {
-            inventoryKeeper.setRole(UserRole.INVENTORY_MANAGER);
+    public ResponseEntity<?> createInventoryKeeper(@Valid @RequestBody InventoryKeeperDTO inventoryKeeperDTO) {
+
+        // Validate email format
+        if (!isValidEmail(inventoryKeeperDTO.getEmail())) {
+            return ResponseEntity.badRequest().body("Invalid email format");
         }
-        return userservice.saveInventoryKeeper(inventoryKeeper);
+
+        // Validate telephone number format
+        if (!isValidTelephone(inventoryKeeperDTO.getTelephone())) {
+            return ResponseEntity.badRequest().body("Invalid telephone number format. It should contain exactly 10 digits.");
+        }
+
+        if (inventoryKeeperDTO.getRole() == null) {
+            inventoryKeeperDTO.setRole(UserRole.INVENTORY_MANAGER);
+        }
+
+        // Validate password format
+        if (!isValidPassword(inventoryKeeperDTO.getPassword())) {
+            return ResponseEntity.badRequest().body("Invalid password format. It should be at least 5 characters long and contain a mix of uppercase letters, lowercase letters, and digits.");
+        }
+
+        // Validate full name format
+        if (!isValidFullName(inventoryKeeperDTO.getFullName())) {
+            return ResponseEntity.badRequest().body("Invalid full name format. It should contain only letters.");
+        }
+
+        // Save the user
+        InventoryKeeper savedInventoryKeeper = userservice.saveInventoryKeeper(inventoryKeeperDTO);
+
+        return ResponseEntity.ok(savedInventoryKeeper);
     }
 
     @PostMapping("/login")
