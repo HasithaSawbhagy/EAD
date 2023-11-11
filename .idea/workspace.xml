@@ -23,12 +23,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/DELL/Documents/github/EAD/user-service",
+    "last_opened_file_path": "C:/Users/Acer/Documents/MyGIT/EAD/user-service",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm"
+    "nodejs_package_manager_path": "npm",
+    "spring.configuration.checksum": "232dc82b9c15e76e542f851432114f75"
   }
 }]]></component>
   <component name="RunManager">
@@ -56,6 +57,7 @@
       <updated>1699162715886</updated>
       <workItem from="1699162719074" duration="418000" />
       <workItem from="1699248490585" duration="84000" />
+      <workItem from="1699682053558" duration="38000" />
     </task>
     <servers />
   </component>

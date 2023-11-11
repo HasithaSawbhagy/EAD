@@ -34,6 +34,26 @@ public class UserService {
     }
 
 
+    public Object getUserByEmailTest(String email) {
+        User customer = userRepository.findByEmail(email);
+        if (customer != null ) {
+            return customer;
+        }
+
+        // If not a CUSTOMER, try to authenticate as an INVENTORY_MANAGER
+        InventoryKeeper inventoryManager = inventoryKeeperRepository.findByEmail(email);
+        if (inventoryManager != null ) {
+            return inventoryManager;
+        }
+
+        // If not an INVENTORY_MANAGER, try to authenticate as a DELIVERY_PERSON
+        DeliveryPerson deliveryPerson = deliveryPersonRepository.findByEmail(email);
+        if (deliveryPerson != null ) {
+            return deliveryPerson;
+        }
+        // If no match is found, return null
+        return null;
+    }
 
     //customer registration
     public User saveUser(UserDTO userDTO) {

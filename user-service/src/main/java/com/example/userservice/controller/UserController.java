@@ -49,6 +49,12 @@ public class UserController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
+    @GetMapping("/{email}")
+    public Object getUserByEmail(@PathVariable String email) {
+        return userservice.getUserByEmailTest(email);
+    }
+
+
     private boolean isValidEmail(String email) {
         //  email format validation
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
