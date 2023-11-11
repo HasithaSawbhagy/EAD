@@ -40,6 +40,7 @@ function Login() {
                 console.log(userRes.data);
                
                 const userid = userRes.data.id;
+                const password = userRes.data.password;
                 const userName = userRes.data.fullName;
                 const phone = userRes.data.telephone;
                 const email = userRes.data.email;
@@ -51,7 +52,8 @@ function Login() {
                   userName,
                   phone,
                 email,
-                address
+                address,
+                password
                 });
 
                 // Pass user information to the customer page
@@ -75,6 +77,7 @@ function Login() {
                   userName,
                   phone,
                 email,
+                password
              
                 });
 
@@ -99,7 +102,8 @@ function Login() {
                       userName,
                       phone,
                     email,
-                    areacode
+                    areacode,
+                    password
                  
                     });
 
