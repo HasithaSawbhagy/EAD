@@ -93,7 +93,7 @@ public class DeliveryService {
                 .orElseThrow(() -> new RuntimeException("Delivery not found"));
         delivery.setDelPerson_id(deliveryUpdate.getDelPerson_id());
         delivery.setDelPerson_name(deliveryUpdate.getDelPerson_name());
-        delivery.setStatus(deliveryUpdate.getStatus());
+        delivery.setStatus("on the way");
         deliveryRepository.save(delivery);
         log.info("Delivery {} updated with delivery person info: ID={}, Name={}", id, deliveryUpdate.getDelPerson_id(), deliveryUpdate.getDelPerson_name());
     }
