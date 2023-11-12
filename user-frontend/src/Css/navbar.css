@@ -1,0 +1,89 @@
+.navbar {
+    height: 55px;
+    border-bottom: 1px solid rgb(81, 78, 156);
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: #392a2a;
+    background-color: #5fb689;
+  
+    .wrapper {
+      width: 100%;
+  
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  
+      .search{
+        
+        display: flex;
+        margin-top: 5px;
+  
+        .iconHome{
+          background-color: #8d8c8c;
+          border-radius: 15px;
+          padding: 1px;
+          font-size: 28px;
+        }
+  
+        .currentPage{
+          margin-left: 5px;
+          margin-top: 3px;
+          font-size: 17px;
+          
+        }
+      }
+  
+      .items {
+        display: flex;
+        align-items: center;
+        
+        .item {
+          display: flex;
+          align-items: center;
+          margin-right: 20px;
+          position: relative;
+  
+         
+  
+          .icon {
+              font-size: 25px;
+          }
+  
+          .login{
+            background-color: rgb(44, 103, 45);
+            border-radius: 10%;
+            padding-left: 10px;
+            padding-right: 10px;
+            color: #dfdfdf;
+            display: flex;
+            
+    
+            
+          }
+  
+          .avatar {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+          }
+  
+          .counter {
+              width: 15px;
+              height: 15px;
+              background-color: red;
+              border-radius: 50%;
+              color: white;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 10px;
+              font-weight: bold;
+              position: absolute;
+              top: -5px;
+              right: -5px;
+          }
+        }
+      }
+    }
+  }
